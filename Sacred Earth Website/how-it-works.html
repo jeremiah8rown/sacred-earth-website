@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>How It Works | Sacred Earth Produce</title>
+  <meta name="description" content="Discover the Sacred Earth Produce journey: From sourcing at sustainable California farms to reliable delivery. See how our transparent process works.">
+  <link rel="preload" href="/logo.png" as="image" fetchpriority="high">
+  <link rel="preload" href="/grain.png" as="image" fetchpriority="low">
+  <link rel="preload" href="/how-it-works-farm.jpg" as="image">
+  <link rel="preload" href="/how-it-works-list.jpg" as="image">
+  <link rel="preload" href="/how-it-works-hub.jpg" as="image">
+  <link rel="preload" href="/how-it-works-truck.jpg" as="image">
+  <link rel="preload" href="/how-it-works-handshake.jpg" as="image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Domine:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #3f6134;
+      --brand-hover: #35512c;
+      --secondary: #678d4d;
+      --accent: #c96a2f;
+      --accent-hover: #a25428;
+      --bg: #fefdf9;
+      --bg-light: #f8faf6;
+      --bg-lighter: #f7fbf5;
+      --card: #fcfaf6;
+      --text: #222b25;
+      --text-light: #5a685f;
+      --border-light: #dde5d9;
+      --white: #ffffff;
+      --shadow: 0 4px 18px rgba(25,47,44,.07);
+      --t: cubic-bezier(0.33,1,0.68,1);
+      --t-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --t-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+    html { scroll-behavior: smooth; overflow-y: auto; }
+    body {
+      font-family:Inter,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-size:18px;
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+      opacity: 0;
+      animation: fadeInPage 1.2s var(--ease-out-quint) forwards;
+    }
+    @keyframes fadeInPage { to { opacity: 1; } }
+    a { color:inherit; text-decoration:none; transition: color 0.3s var(--t-smooth); }
+    img { display: block; max-width: 100%; height: auto }
+    button { display: block; cursor: pointer; border: none; background: none }
+    body.no-scroll { overflow:hidden }
+
+    .mobile-only { display: none; }
+    .desktop-only { display: inline-block; }
+
+    /* HEADER styles from V8 (matching index.html) */
+    header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.07); position: relative; z-index: 20 }
+    .header-inner {
+        max-width: 1400px; margin: 0 auto; padding: 1.55rem 2rem;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .logo-link {
+        width: 180px; height: 90px; border-radius: 0;
+        overflow: hidden; margin-right: 3.5rem;
+        transition: transform .2s var(--t);
+    }
+    .logo-link img {
+        width: 100%; height: 100%;
+        object-fit: contain;
+        transition: transform .2s var(--t);
+    }
+    .logo-link:hover img { transform: scale(1.05) }
+    .mobile-nav-toggle { display: none; position: absolute; left: 2rem; top: 50%; transform: translateY(-50%); font-size: 2rem; cursor: pointer; color: var(--text) }
+    nav ul { list-style: none; display: flex; gap: 2rem }
+    nav a {
+        position: relative; font-weight: 500; font-size: 1.25rem; text-transform: lowercase;
+        padding: .32rem 0; transition: color .2s var(--t-smooth)
+    }
+    nav a::after {
+        content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+        background: var(--secondary); border-radius: 2px; transition: width .26s var(--t), left .26s var(--t), background-color .2s var(--t-smooth)
+    }
+    nav a:hover::after, nav a.active::after { width: 100%; left: 0; background-color: var(--brand) }
+    nav a:hover, nav a.active, nav a:active { color: var(--brand) }
+
+    .header-link-button {
+        background: var(--brand); color: #fff; border-radius: 9px;
+        font-family: Domine, serif; font-weight: 600; font-size: 1.05rem;
+        padding: .9rem 2.4rem; margin-left: 5.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: inline-block; text-align: center;
+        transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+    }
+    .header-link-button:hover {
+        background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    /* --- START: Media Query for iPad Portrait (Matches index.html) --- */
+    @media (min-width: 701px) and (max-width: 950px) {
+        .header-inner {
+            padding: 1.55rem 3rem; 
+            justify-content: center;
+        }
+        .logo-link {
+            margin-right: 1.6rem; 
+            width: 160px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+        nav ul {
+            gap: 1rem;
+        }
+        nav a {
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+        .header-link-button {
+            margin-left: 3.1rem; 
+            padding: .8rem 1.8rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+    }
+    /* --- END: Media Query --- */
+
+    @media (max-width: 700px) {
+        .header-inner { flex-direction: column; padding: 1rem }
+        .logo-link { margin: 0.8rem auto 0.75rem; }
+        .header-link-button { display: none }
+        .mobile-nav-toggle { display: block }
+        nav ul {
+            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; width: 80%; max-width: 280px; height: 100vh;
+            background: #fdfdfb url('/grain.png') repeat; background-size: 80px; 
+            border-left: 4px solid var(--secondary); transform: translateX(-100%);
+            visibility: hidden; opacity: 0;
+            transition: transform .35s var(--t-smooth), opacity .3s var(--t-smooth), visibility 0s linear .35s;
+            z-index: 101; gap: 0; padding: 3.5rem 0 1rem;
+        }
+        nav ul.mobile-active {
+            transform: translateX(0); opacity: 1; visibility: visible; transition-delay: 0s;
+        }
+        nav ul li { padding-left: 1.5rem }
+        nav ul li + li { margin-top: 2rem; }
+        nav ul li a { font-size: 1.4rem; padding: .75rem 0 }
+        nav a::after { display: none !important; }
+        .mobile-only { display: block }
+        .desktop-only { display: none }
+        .mobile-only.mobile-cta-wrapper {
+            margin-top: auto; position: sticky; bottom: 0; background: #fdfdfb;
+            padding: 1rem 0; text-align: center; display: list-item !important;
+        }
+        .mobile-only.mobile-cta-wrapper a {
+            display: inline-block; background: var(--brand); color: #fff;
+            border-radius: 9px; padding: .75rem 0; width: calc(100% - 4rem); margin: 0 2rem;
+            font-family: Domine, serif; font-size: 1.1rem; font-weight: 600;
+            transition: background-color .18s var(--t-smooth); text-decoration: none !important;
+        }
+        .mobile-only.mobile-cta-wrapper a:hover { background: var(--brand-hover) }
+    }
+
+
+    /* --- HOW IT WORKS - HERO --- */
+    .hiw-hero {
+        text-align: center;
+        padding: 6rem 2rem 5rem;
+        background: var(--bg-lighter);
+    }
+    .hiw-hero h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.8rem, 6vw, 4.2rem);
+        color: var(--brand);
+        margin-bottom: 1rem;
+        line-height: 1.15;
+    }
+    .hiw-hero p.lead {
+        font-size: 1.25rem;
+        color: var(--text-light);
+        max-width: 750px;
+        margin: 0 auto;
+        font-family: 'Domine', serif;
+    }
+
+    /* --- THE JOURNEY - MAIN STRUCTURE --- */
+    .journey-wrapper {
+        position: relative;
+        padding: 4rem 0 6rem;
+        background-color: var(--white);
+        overflow: hidden;
+    }
+    .journey-line {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 4px;
+        height: 100%;
+        background: var(--border-light);
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+    .journey-line-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background: var(--secondary);
+        transition: height 0.2s linear;
+        z-index: 2;
+    }
+
+    /* --- JOURNEY STEP STYLING --- */
+    .journey-step {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: relative;
+        padding: 3rem 2rem;
+        margin-bottom: 4rem;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0;
+        transition: opacity 0.8s var(--ease-out-quint);
+        z-index: 5;
+    }
+    .journey-step.is-visible {
+        opacity: 1;
+    }
+
+    .step-content {
+        width: 45%;
+        background: var(--card);
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        border: 1px solid var(--border-light);
+        transition: transform 0.6s var(--ease-out-quint);
+        z-index: 6;
+    }
+    .step-image {
+        width: 45%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+        transition: transform 0.6s var(--ease-out-quint);
+        z-index: 6;
+    }
+    .step-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s var(--ease-out-quint);
+    }
+    .step-image:hover img {
+        transform: scale(1.08);
+    }
+
+    /* Step Number Marker */
+    .step-marker {
+        position: absolute;
+        top: 3rem;
+        left: 50%;
+        width: 60px;
+        height: 60px;
+        background: var(--brand);
+        border-radius: 50%;
+        z-index: 7;
+        border: 5px solid var(--bg);
+        box-shadow: 0 0 0 5px var(--brand);
+        transform: translateX(-50%) scale(0);
+        transition: transform 0.5s var(--t-elastic) 0.2s;
+    }
+    .journey-step.is-visible .step-marker {
+        transform: translateX(-50%) scale(1);
+    }
+    .step-marker .step-number-visual {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--white);
+        line-height: 1;
+        display: inline-block;
+    }
+
+
+    /* Alternating Sides & Animations */
+    .journey-step:nth-child(odd) .step-content { order: 1; transform: translateX(-80px); }
+    .journey-step:nth-child(odd) .step-image { order: 2; transform: translateX(80px); }
+    .journey-step:nth-child(even) .step-content { order: 2; transform: translateX(80px); }
+    .journey-step:nth-child(even) .step-image { order: 1; transform: translateX(-80px); }
+
+    .journey-step.is-visible .step-content,
+    .journey-step.is-visible .step-image {
+        transform: translateX(0);
+    }
+
+
+    /* Content within Steps */
+    .step-content h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--brand);
+        margin-bottom: 1rem;
+    }
+    .step-content p {
+        font-size: 1.05rem;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        line-height: 1.65;
+    }
+    .step-content p:last-child {
+        margin-bottom: 0;
+    }
+    .step-content ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 1rem;
+    }
+    .step-content ul li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+    .step-content ul li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        top: 1px;
+        color: var(--secondary);
+        font-weight: bold;
+    }
+
+    /* --- MEDIA QUERIES for Journey --- */
+    @media (max-width: 800px) {
+        .journey-line { left: 25px; }
+        .journey-step { flex-direction: column; align-items: center; padding: 2rem 1rem; }
+        .step-content, .step-image { width: 100%; max-width: 500px; transform: translateY(50px); }
+        .journey-step.is-visible .step-content,
+        .journey-step.is-visible .step-image { transform: translateY(0); }
+        .step-content { order: 2 !important; margin-top: 2rem; }
+        .step-image { order: 1 !important; }
+
+        .step-marker { left: 25px; top: 1rem; width: 50px; height: 50px; transform: translateX(-50%) scale(0); }
+        .journey-step.is-visible .step-marker { transform: translateX(-50%) scale(1); }
+        .step-marker .step-number-visual { font-size: 1.5rem; transform: translate(-50%, -60%);}
+
+
+        .journey-step:nth-child(odd) .step-content,
+        .journey-step:nth-child(odd) .step-image,
+        .journey-step:nth-child(even) .step-content,
+        .journey-step:nth-child(even) .step-image { transform: translateY(50px); }
+         .journey-step.is-visible .step-content,
+         .journey-step.is-visible .step-image { transform: translateY(0); }
+    }
+
+    /* --- FINAL CTA (V10 Styles) --- */
+    .hiw-cta {
+        padding: 6rem 2rem;
+        background: var(--bg-lighter);
+        text-align: center;
+    }
+     .hiw-cta h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.2rem, 5vw, 3rem);
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        color: var(--brand);
+     }
+     .hiw-cta p {
+        max-width: 680px; 
+        margin: 0 auto 2.5rem;
+        font-size: 1.15rem;
+        opacity: 0.9;
+        color: var(--text-light);
+     }
+     .hiw-cta .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+     }
+     .hiw-cta .btn {
+        padding: 1.2rem 3.2rem;
+        border-radius: 10px;
+        font-family: 'Domine', serif;
+        font-weight: 600;
+        font-size: 1.15rem;
+        text-decoration: none;
+        display: inline-block;
+        transition: background .2s var(--t-smooth), color .2s var(--t-smooth), transform .2s var(--t-elastic), box-shadow .25s var(--t-smooth);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 2px solid transparent;
+        width: 260px;
+        text-align: center;
+     }
+     .hiw-cta .btn.primary {
+        background: var(--brand);
+        color: var(--white);
+        border-color: var(--brand);
+     }
+     .hiw-cta .btn.secondary {
+         background: var(--accent);
+         color: var(--white);
+         border-color: var(--accent);
+     }
+     .hiw-cta .btn:hover {
+        transform: scale(1.05) translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+     }
+     .hiw-cta .btn.primary:hover {
+         background: var(--brand-hover);
+         border-color: var(--brand-hover);
+         color: var(--white);
+     }
+      .hiw-cta .btn.secondary:hover {
+          background: var(--accent-hover);
+          border-color: var(--accent-hover);
+          color: var(--white);
+      }
+    .hiw-cta .btn:focus-visible {
+        outline: 2px solid var(--brand);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px var(--bg-lighter), 0 0 0 5px var(--brand);
+    }
+
+
+    /* FOOTER styles from V8 (matching index.html) */
+    .site-footer { background: #121212; color: #c9c9c9; padding: 3rem 1.5rem; margin-top: 0;}
+    .footer-grid {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 2.5rem 3rem;
+    }
+    .footer-col {
+        display: flex; flex-direction: column; transition: transform .3s var(--t-smooth);
+    }
+    .footer-col:hover { transform: translateY(-5px) }
+    .footer-col.brand h4, .footer-col.brand p, .footer-col.brand small,
+    .footer-col h4, .footer-col ul li a, .footer-col form, .footer-col small { color: #fff }
+    .footer-col.brand p { margin-bottom:.5rem; }
+    .footer-col.brand small { margin-top: auto; opacity: .7; padding-top: 1rem }
+    .footer-col h4 {
+        font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;
+    }
+    .footer-col ul {
+        list-style: none; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;
+    }
+    .footer-col ul li a {
+        font-size: .95rem; transition: color .2s var(--t-smooth), padding-left .2s var(--t-smooth); text-transform: lowercase; 
+    }
+    .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px }
+    .footer-col form { display: flex; gap: .65rem; margin: .9rem 0 }
+    .footer-col input[type=email] {
+        flex: 1; padding: .6rem .75rem; border: none; border-radius: 4px;
+        font-size: .95rem; background-color: #fff; color: var(--text);
+    }
+    .footer-col input[type=email]::placeholder { color: var(--text-light) }
+    .footer-col button[type="submit"] {
+        padding: .62rem 1.15rem; border: none; border-radius: 4px;
+        background: var(--brand); color: #fff;
+        font-family: Domine, serif; font-weight: 600; font-size: .95rem; text-transform: lowercase; 
+        cursor: pointer; transition: background .18s var(--t), transform .18s var(--t);
+        display: inline-block;
+    }
+    .footer-col button[type="submit"]:hover { background: var(--brand-hover); transform: scale(1.03) }
+    .footer-bottom.mobile-only { display: none }
+    @media (max-width: 700px) {
+        .desktop-only { display: none }
+        .mobile-only { display: block }
+        .footer-col.brand small { display: none }
+        .footer-grid { align-items: start }
+        .footer-grid > .footer-col:nth-child(2) > ul { flex-grow: 0 }
+         .footer-bottom.mobile-only { margin-top:1.5rem; color:#fff; opacity:.7; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+        <button class="mobile-nav-toggle mobile-only" aria-label="Menu">☰</button>
+        <a href="/index.html" class="logo-link"><img src="/logo.png" alt="Sacred Earth Produce Logo" loading="lazy"></a> 
+        <nav>
+            <ul>
+                <li><a href="/about.html">about</a></li>
+                <li><a href="/how-it-works.html" class="active">how it works</a></li>
+                <li><a href="/buyers.html">buyers</a></li>
+                <li><a href="/farmers.html">farmers</a></li>
+                <li><a href="/contact.html">contact</a></li>
+                <li class="mobile-only mobile-cta-wrapper">
+                    <a href="/buyers.html">Order Produce</a> </li>
+            </ul>
+        </nav>
+        <a href="/buyers.html" class="header-link-button desktop-only">Order Produce</a> </div>
+  </header>
+
+  <main>
+    <section class="hiw-hero">
+      <h1>The Sacred Earth Journey</h1>
+      <p class="lead">From the rich soil of California's family farms to your door – a simple, reliable, and transparent path for exceptional produce.</p>
+    </section>
+
+    <section class="journey-wrapper">
+      <div class="journey-line"><div class="journey-line-progress"></div></div>
+
+      <div class="journey-step">
+        <div class="step-content">
+          <h3>1. Sourcing & Curation</h3>
+          <p>Our journey begins with our dedicated farm partners. Through constant communication, we understand what's reaching peak flavor and quality each week. Farmers harvest and pack to high standards, ensuring only the best starts the journey.</p>
+          <ul>
+            <li>Strong, long-term farmer relationships.</li>
+            <li>Focus on seasonal, sustainably-grown produce.</li>
+            <li>Quality assurance starts at the source.</li>
+          </ul>
+        </div>
+        <div class="step-marker"><span class="step-number-visual">01</span></div>
+        <div class="step-image">
+          <img src="/how-it-works-farm.jpg" alt="Sun-drenched farm field with rows of healthy green crops ready for harvest." loading="lazy">
+        </div>
+      </div>
+
+      <div class="journey-step">
+         <div class="step-image">
+          <img src="/how-it-works-list.jpg" alt="A person reviewing a digital produce availability list on a tablet in a bright setting." loading="lazy">
+        </div>
+        <div class="step-marker"><span class="step-number-visual">02</span></div>
+        <div class="step-content">
+          <h3>2. Availability & Orders</h3>
+          <p>Every week, we share our curated list of available produce – featuring origins and fair pricing – via email. Buyers can then easily place orders via email, call, or text.</p>
+          <ul>
+            <li>Clear weekly availability list.</li>
+            <li>Flexible ordering methods.</li>
+            <li>Efficient order processing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-content">
+          <h3>3. Hub & Quality</h3>
+          <p>Fresh produce then arrives at our Los Angeles hub. Every item undergoes another rigorous quality check before being logged and moved into cold storage. Our team then expertly breaks down and re-assembles pallets, optimizing them for each delivery route.</p>
+          <ul>
+            <li>Strict hub-side quality checks.</li>
+            <li>Professional cold storage management.</li>
+            <li>Optimized order preparation for delivery.</li>
+          </ul>
+        </div>
+        <div class="step-marker"><span class="step-number-visual">03</span></div>
+         <div class="step-image">
+          <img src="/how-it-works-hub.jpg" alt="Clean and organized warehouse hub with pallets of fresh produce in cold storage." loading="lazy">
+        </div>
+      </div>
+
+      <div class="journey-step">
+         <div class="step-image">
+          <img src="/how-it-works-truck.jpg" alt="A Sacred Earth Produce refrigerated delivery truck on a sunny California road." loading="lazy">
+        </div>
+        <div class="step-marker"><span class="step-number-visual">04</span></div>
+        <div class="step-content">
+          <h3>4. Delivery & Flexibility</h3>
+          <p>Your orders are dispatched in our refrigerated trucks, ensuring peak freshness upon arrival. We typically deliver within 48-72 hours after your order is confirmed, managing routes across California. Need to pick up or have specific scheduling needs? We can discuss flexible logistics to suit you.</p>
+          <ul>
+            <li>Refrigerated, temperature-controlled delivery.</li>
+            <li>Delivery typically within 48-72 hours from your order.</li>
+            <li>Flexible scheduling & pickup options.</li>
+          </ul>
+        </div>
+      </div>
+
+       <div class="journey-step">
+        <div class="step-content">
+          <h3>5. The Partnership</h3>
+          <p>Underpinning this entire process is our commitment to trust and reliability. We ensure our farmers receive fair compensation promptly, and we provide clear, consistent communication and payment terms for our buyers. It's a partnership built to last.</p>
+           <ul>
+            <li>Commitment to fair farmer pricing.</li>
+            <li>Transparent and reliable buyer relations.</li>
+            <li>A simple, trustworthy food-chain link.</li>
+          </ul>
+        </div>
+        <div class="step-marker"><span class="step-number-visual">05</span></div>
+         <div class="step-image">
+          <img src="/how-it-works-handshake.jpg" alt="Close-up of a farmer and a buyer shaking hands warmly in a sunlit agricultural field." loading="lazy">
+        </div>
+      </div>
+
+    </section>
+
+    <section class="hiw-cta">
+        <h2>Ready to Experience the Difference?</h2>
+        <p>Whether you're growing exceptional produce or sourcing it for your business, discover how our simple, reliable process can work for&nbsp;you.</p>
+        <div class="btn-group">
+            <a href="/buyers.html" class="btn primary">Become a Buyer</a>
+            <a href="/farmers.html" class="btn secondary">Grow With Us</a>
+        </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-col brand">
+            <h4>Sacred Earth Produce</h4>
+            <p>orders@sacredearthproduce.com</p>
+            <small class="desktop-only">© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/about.html">about</a></li>
+                <li><a href="/how-it-works.html" class="active">how it works</a></li>
+                <li><a href="/buyers.html">buyers</a></li>
+                <li><a href="/farmers.html">farmers</a></li>
+                <li><a href="/contact.html">contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Join Our List</h4>
+            <p>Get weekly availability updates and news from our growers.</p>
+            <form>
+                <input type="email" placeholder="Email Address" required>
+                <button type="submit">sign up</button>
+            </form>
+            <small>We respect your privacy.</small>
+        </div>
+    </div>
+    <div class="footer-bottom mobile-only">
+        <small>© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation JS from index.html
+    document.addEventListener('click', e => {
+        const mBtn = document.querySelector('.mobile-nav-toggle');
+        const menu = document.querySelector('nav ul');
+        if (!mBtn || !menu) return;
+
+        if (e.target === mBtn) {
+            const open = menu.classList.toggle('mobile-active');
+            mBtn.textContent = open ? '×' : '☰';
+            document.body.classList.toggle('no-scroll', open);
+        } else if (menu.classList.contains('mobile-active') && !menu.contains(e.target) && e.target !== mBtn) {
+            menu.classList.remove('mobile-active');
+            mBtn.textContent = '☰';
+            document.body.classList.remove('no-scroll');
+        }
+    });
+
+    // Intersection Observer for Journey Step Animations & Line
+    const journeySteps = document.querySelectorAll('.journey-step');
+    const journeyLineProgress = document.querySelector('.journey-line-progress');
+    const journeyWrapper = document.querySelector('.journey-wrapper');
+
+    if (window.IntersectionObserver && journeySteps.length > 0 && journeyLineProgress && journeyWrapper) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.3, rootMargin: "0px 0px -50px 0px" });
+
+        journeySteps.forEach(step => observer.observe(step));
+
+        const updateLine = () => {
+            const wrapperRect = journeyWrapper.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const docHeight = journeyWrapper.offsetHeight;
+            const wrapperTop = wrapperRect.top + window.scrollY;
+
+            if (wrapperRect.bottom < 0 || wrapperRect.top > windowHeight) {
+                journeyLineProgress.style.height = (wrapperRect.bottom < 0) ? '100%' : '0%';
+                return;
+            }
+
+            const startScroll = wrapperTop - windowHeight * 0.8;
+            const endScroll = wrapperTop + docHeight - windowHeight * 0.2;
+            const scrollRange = endScroll - startScroll;
+
+            let progress = (window.scrollY - startScroll) / scrollRange;
+            progress = Math.min(1, Math.max(0, progress));
+
+            journeyLineProgress.style.height = `${progress * 100}%`;
+        };
+
+        window.addEventListener('scroll', updateLine, { passive: true });
+        window.addEventListener('resize', updateLine, { passive: true });
+        updateLine(); // Initial call
+
+    } else {
+        console.warn("Intersection Observer not supported or elements missing. Showing all steps.");
+        journeySteps.forEach(step => step.classList.add('is-visible'));
+         if(journeyLineProgress) journeyLineProgress.style.height = '100%';
+    }
+  </script>
+
+</body>
+</html>

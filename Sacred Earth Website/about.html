@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>About Sacred Earth Produce | Our Story</title>
+  <meta name="description" content="Discover the story of Sacred Earth Produce. Since 1994, we've grown from a family grove to a trusted distributor connecting sustainable California farms with communities.">
+
+  <link rel="preload" href="/logo.png" as="image">
+  <link rel="preload" href="/grain.png" as="image">
+  <link rel="preload" href="/about-hero-background.png" as="image">
+  <link rel="preload" href="/vintage-truck-produce.png" as="image">
+  <link rel="preload" href="/staff-of-life-display.png" as="image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Domine:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #3f6134;
+      --brand-hover: #35512c;
+      --secondary: #678d4d;
+      --accent: #c96a2f;
+      --accent-hover: #a25428;
+      --bg: #fefdf9;
+      --bg-light: #f8faf6;
+      --bg-lighter: #f7fbf5;
+      --card: #fcfaf6;
+      --text: #222b25;
+      --text-light: #5a685f;
+      --border-light: #dde5d9;
+      --white: #ffffff;
+      --shadow: 0 4px 18px rgba(25,47,44,.07);
+      --t: cubic-bezier(0.33,1,0.68,1);
+      --t-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --t-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth; overflow-y: auto }
+    body {
+      font-family: Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.75; /* Kept from original about */
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      opacity: 0;
+      animation: fadeInPage 1.3s var(--ease-out-quint) forwards;
+      overflow-x: hidden;
+    }
+    @keyframes fadeInPage { to { opacity: 1 } }
+    a { color: inherit; text-decoration: none; transition: color 0.3s var(--t-smooth) }
+    img, button { display: block; max-width: 100%; height: auto; border: none; background: none; } /* Updated */
+    body.no-scroll { overflow: hidden }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transition: opacity 0.9s var(--ease-out-cubic), transform 0.9s var(--ease-out-cubic);
+    }
+    .animate-fade-in { transform: translateY(30px) }
+    .animate-slide-in-left { transform: translateX(-30px) }
+    .animate-slide-in-right { transform: translateX(30px) }
+    .animate-scale-up { transform: scale(0.92) rotate(-1.5deg) }
+
+    .animate-on-scroll.is-visible {
+      opacity: 1;
+      transform: translate(0,0) scale(1);
+    }
+
+    .desktop-only { display: inline-block }
+    .mobile-only  { display: none }
+
+    /* --- HEADER (FROM INDEX.HTML) --- */
+    header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.07); position: sticky; top: 0; z-index: 100 }
+    .header-inner {
+        max-width: 1400px; margin: 0 auto; padding: 1.55rem 2rem;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .logo-link {
+        width: 180px; height: 90px; border-radius: 0;
+        overflow: hidden; margin-right: 3.5rem; transition: transform .2s var(--t);
+    }
+    .logo-link img {
+        width: 100%; height: 100%; object-fit: contain;
+        transition: transform .2s var(--t);
+    }
+    .logo-link:hover img { transform: scale(1.05) }
+    .mobile-nav-toggle { display: none; position: absolute; left: 2rem; top: 50%; transform: translateY(-50%); font-size: 2rem; cursor: pointer; color: var(--text) }
+    nav ul { list-style: none; display: flex; gap: 2rem }
+    nav a {
+        position: relative; font-weight: 500; font-size: 1.25rem; text-transform: lowercase;
+        padding: .32rem 0; transition: color .2s var(--t-smooth)
+    }
+    nav a::after {
+        content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+        background: var(--secondary); border-radius: 2px; transition: width .26s var(--t), left .26s var(--t), background-color .2s var(--t-smooth)
+    }
+    nav a:hover::after, nav a.active::after { width: 100%; left: 0; background-color: var(--brand) }
+    nav a:hover, nav a.active, nav a:active { color: var(--brand) }
+
+    .header-link-button {
+        background: var(--brand); color: #fff; border-radius: 9px;
+        font-family: Domine, serif; font-weight: 600; font-size: 1.05rem;
+        padding: .9rem 2.4rem; margin-left: 5.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: inline-block; text-align: center;
+        transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+    }
+    .header-link-button:hover {
+        background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    /* --- START: Media Query for iPad Portrait (HEADER specific) --- */
+    @media (min-width: 701px) and (max-width: 950px) {
+        .header-inner {
+            padding: 1.55rem 3rem;
+            justify-content: center;
+        }
+        .logo-link {
+            margin-right: 1.6rem;
+            width: 160px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+        nav ul {
+            gap: 1rem;
+        }
+        nav a {
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+        .header-link-button {
+            margin-left: 3.1rem;
+            padding: .8rem 1.8rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+    }
+    /* --- END: Media Query for header --- */
+
+    @media (max-width: 700px) {
+      .header-inner { flex-direction: column; padding: 1rem }
+      .logo-link { margin: 0.8rem auto 0.75rem; }
+      .header-link-button { display: none }
+      .mobile-nav-toggle { display: block }
+      nav ul {
+        display: flex; flex-direction: column; position: fixed; top: 0; left: 0;
+        width: 80%; max-width: 280px; height: 100vh;
+        background: #fdfdfb url('/grain.png') repeat; background-size: 80px; 
+        border-left: 4px solid var(--secondary); transform: translateX(-100%);
+        visibility: hidden; opacity: 0;
+        transition: transform .35s var(--t-smooth), opacity .3s var(--t-smooth), visibility 0s linear .35s;
+        z-index: 101; gap: 0; padding: 3.5rem 0 1rem;
+      }
+      nav ul.mobile-active {
+        transform: translateX(0); opacity: 1; visibility: visible; transition-delay: 0s;
+      }
+      nav ul li { padding-left: 1.5rem }
+      nav ul li + li { margin-top: 2rem; }
+      nav ul li a { font-size: 1.4rem; padding: .75rem 0 }
+      nav a::after { display: none !important; }
+      .mobile-only { display: block }
+      .desktop-only { display: none }
+      .mobile-only.mobile-cta-wrapper {
+        margin-top: auto; position: sticky; bottom: 0; background: #fdfdfb;
+        padding: 1rem 0; text-align: center; display: list-item !important;
+      }
+      .mobile-only.mobile-cta-wrapper a {
+        display: inline-block; background: var(--brand); color: #fff;
+        border-radius: 9px; padding: .75rem 0; width: calc(100% - 4rem); margin: 0 2rem;
+        font-family: Domine, serif; font-size: 1.1rem; font-weight: 600;
+        transition: background-color .18s var(--t-smooth); text-decoration: none !important;
+      }
+      .mobile-only.mobile-cta-wrapper a:hover { background: var(--brand-hover) }
+    }
+    /* --- END HEADER CSS --- */
+
+    /* --- About Page Specific CSS --- */
+    .about-section { padding: 5rem 2rem; position: relative }
+    .about-hero {
+      min-height: 70vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; color: var(--white); position: relative; overflow: hidden;
+    }
+    .about-hero-bg {
+      position: absolute; inset: 0; background-image: url('/about-hero-background.png'); 
+      background-position: center center; background-size: cover; background-repeat: no-repeat;
+      transform: scale(1.25); transform-origin: top center; will-change: transform;
+      backface-visibility: hidden; z-index: 0;
+    }
+    .about-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(30,35,30,0.05) 0%, rgba(30,35,30,0.55) 100%);
+      z-index: 1;
+    }
+    .about-hero-content {
+      position: relative; z-index: 2; max-width: 680px; padding: 0 1rem; will-change: transform;
+    }
+    .about-hero h1 {
+      font-family: 'Playfair Display', serif; font-size: clamp(3rem, 7.5vw, 5rem); font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25);
+      margin-bottom: 1.5rem; letter-spacing: 2px; line-height: 1.0;
+    }
+    .about-hero h1 .line-wrap { display: block; overflow: hidden }
+    .about-hero h1 .word { display: inline-block }
+    .about-hero p.subtitle {
+      font-size: clamp(1.1rem, 2.3vw, 1.4rem); font-family: 'Domine', serif; font-weight: 600;
+      max-width: 700px; margin: 0 auto; letter-spacing: 1px; word-spacing: 2px;
+      line-height: 1.7; opacity: 0.95;
+    }
+    .story-feature-block { padding: 4.5rem 2rem; text-align: center }
+    .story-feature-block:nth-child(odd) { background-color: var(--bg-lighter) }
+    .story-feature-image-container {
+      max-width: 600px; margin: 0 auto .5rem; border-radius: 10px;
+      overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+    .story-feature-image-container img {
+      border-radius: 10px; transition: transform .65s var(--ease-out-cubic); display: block;
+    }
+    .story-feature-image-container:hover img { transform: scale(1.025) }
+    .image-caption {
+      font-size: .85rem; color: var(--text-light); margin: .75rem auto 2rem;
+      font-style: italic; text-align: center; max-width: 550px;
+    }
+    .story-feature-text { max-width: 650px; margin: 0 auto; text-align: left }
+    .story-feature-text .section-title {
+      font-family: 'Playfair Display', serif; color: var(--brand);
+      font-size: clamp(1.8rem, 4.5vw, 2.4rem); margin-bottom: 1.5rem;
+      line-height: 1.25; text-align: center;
+    }
+    .story-feature-text p {
+      font-size: 1.05rem; line-height: 1.75; color: var(--text-light); margin-bottom: 1.5rem;
+    }
+    .story-feature-text p:last-child { margin-bottom: 0 }
+    .philosophy-section {
+      background: linear-gradient(155deg, var(--brand) 0%, var(--brand-hover) 100%);
+      color: var(--white); text-align: center; position: relative; padding-bottom: 8rem;
+    }
+    .philosophy-section::before {
+      content: ''; position: absolute; inset: 0; background-image: url('/grain.png'); 
+      opacity: .03; background-size: 80px;
+    }
+    .philosophy-section .section-title {
+      font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 3.4rem); margin-bottom: 1.5rem;
+    }
+    .philosophy-section > .about-container > p {
+      font-family: 'Domine', serif; font-size: 1.15rem; max-width: 720px; margin: 0 auto 4rem;
+    }
+    .philosophy-grid { display: grid; gap: 1.5rem; align-items: stretch }
+    @media (min-width: 600px) { 
+        .philosophy-grid { 
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        } 
+    }
+    /* --- START: iPad Portrait rules for Philosophy Grid --- */
+    @media (min-width: 701px) and (max-width: 950px) {
+        .philosophy-grid {
+            grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
+            gap: 1rem; /* Reduce gap for a tighter fit */
+        }
+        .philosophy-item {
+            padding: 1.5rem 1.2rem; /* Adjust padding within cards */
+        }
+        .philosophy-item h3 {
+            font-size: 1.15rem; /* Slightly smaller heading */
+            margin-bottom: .6rem;
+        }
+        .philosophy-item p {
+            font-size: .85rem; /* Smaller paragraph text */
+            line-height: 1.5;
+        }
+    }
+    /* --- END: iPad Portrait rules for Philosophy Grid --- */
+    @media (min-width: 992px) { 
+        .philosophy-grid { 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 2rem;
+        }
+        /* Reset philosophy item styles if changed for iPad and need to be different for desktop */
+        .philosophy-item {
+            padding: 1.8rem 1.5rem; /* Original/desktop padding */
+        }
+        .philosophy-item h3 {
+            font-size: 1.3rem; /* Original/desktop font size */
+            margin-bottom: .7rem;
+        }
+        .philosophy-item p {
+            font-size: .9rem; /* Original/desktop font size */
+            line-height: 1.55;
+        }
+    }
+    .philosophy-item {
+      background: var(--card); padding: 1.8rem 1.5rem; border-radius: 10px;
+      border: 1px solid var(--border-light); box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      transition: transform .45s var(--ease-out-cubic), box-shadow .45s var(--ease-out-cubic);
+      display: flex; flex-direction: column;
+    }
+    .philosophy-item:hover {
+      transform: translateY(-8px) scale(1.015); box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+    .philosophy-item h3 {
+      font-family: 'Domine', serif; font-size: 1.3rem; margin-bottom: .7rem; color: var(--brand);
+    }
+    .philosophy-item p { font-size: .9rem; line-height: 1.55; color: var(--text); }
+    .about-cta-section {
+      background-color: var(--bg); text-align: center; margin-top: -5rem;
+      position: relative; z-index: 5; border-radius: 24px 24px 0 0;
+      padding: 7rem 2rem 6rem; box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+    }
+    .about-cta-section .section-title {
+      font-family: 'Playfair Display', serif; color: var(--brand);
+      font-size: clamp(2.2rem, 5.5vw, 3rem); margin-bottom: 1.5rem;
+    }
+    .about-cta-section p.subtitle {
+      color: var(--text-light); font-size: 1.15rem; max-width: 650px; margin: 0 auto 3rem;
+    }
+    .cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem }
+    .cta-buttons .btn {
+      background: var(--brand); color: var(--white); padding: 1.1rem 2.8rem;
+      border-radius: 10px; font-family: 'Domine', serif; font-weight: 600; font-size: 1.15rem;
+      text-decoration: none; display: inline-block; text-align: center; min-width: 280px;
+      box-sizing: border-box; transition: background .2s var(--t-smooth), transform .2s var(--t-elastic), box-shadow .25s var(--t-smooth);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .cta-buttons .btn:hover {
+      background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+    }
+    .cta-buttons .btn.secondary { background: var(--accent); box-shadow: 0 2px 4px rgba(0,0,0,0.1) }
+    .cta-buttons .btn.secondary:hover { background: var(--accent-hover) }
+
+    /* --- FOOTER (FROM INDEX.HTML) --- */
+    .site-footer { background: #121212; color: #c9c9c9; padding: 3rem 1.5rem; margin-top: 0; }
+    .footer-grid {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 2.5rem 3rem;
+    }
+    .footer-col {
+        display: flex; flex-direction: column; transition: transform .3s var(--t-smooth);
+    }
+    .footer-col:hover { transform: translateY(-5px) }
+    .footer-col.brand h4, .footer-col.brand p, .footer-col.brand small,
+    .footer-col h4, .footer-col ul li a, .footer-col form, .footer-col small { color: #fff }
+    .footer-col.brand small { margin-top: auto; opacity: .7; padding-top: 1rem }
+    .footer-col h4 {
+        font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;
+    }
+    .footer-col ul {
+        list-style: none; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;
+    }
+    .footer-col ul li a {
+        font-size: .95rem; transition: color .2s var(--t-smooth), padding-left .2s var(--t-smooth); text-transform: lowercase; 
+    }
+    .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px }
+    .footer-col form { display: flex; gap: .65rem; margin: .9rem 0 }
+    .footer-col input[type=email] {
+        flex: 1; padding: .6rem .75rem; border: none; border-radius: 4px;
+        font-size: .95rem; background-color: #fff; color: var(--text);
+    }
+    .footer-col input[type=email]::placeholder { color: var(--text-light) }
+    .footer-col button { 
+        padding: .62rem 1.15rem; border: none; border-radius: 4px;
+        background: var(--brand); color: #fff;
+        font-family: Domine, serif; font-weight: 600; font-size: .95rem; text-transform: lowercase; 
+        cursor: pointer; transition: background .18s var(--t), transform .18s var(--t);
+        display: inline-block;
+    }
+    .footer-col button:hover { background: var(--brand-hover); transform: scale(1.03) } 
+    .footer-bottom.mobile-only { display: none }
+    @media (max-width: 700px) {
+        .desktop-only { display: none }
+        .mobile-only { display: block }
+        .footer-col.brand small { display: none }
+        .footer-grid { align-items: start }
+        .footer-grid > .footer-col:nth-child(2) > ul { flex-grow: 0 }
+        .footer-bottom.mobile-only {
+            margin-top: 1.5rem; color: var(--white); opacity: .7; text-align: center;
+        }
+    }
+    /* --- END FOOTER CSS --- */
+
+  </style>
+</head>
+<body>
+
+  <header>
+      <div class="header-inner">
+          <button class="mobile-nav-toggle mobile-only" aria-label="Menu">☰</button>
+          <a href="/index.html" class="logo-link"><img src="/logo.png" alt="Sacred Earth Produce Logo" loading="lazy"></a>
+          <nav>
+              <ul>
+                  <li><a href="/about.html" class="active">about</a></li>
+                  <li><a href="/how-it-works.html">how it works</a></li>
+                  <li><a href="/buyers.html">buyers</a></li>
+                  <li><a href="/farmers.html">farmers</a></li>
+                  <li><a href="/contact.html">contact</a></li>
+                  <li class="mobile-only mobile-cta-wrapper">
+                      <a href="/buyers.html">Order Produce</a> </li>
+              </ul>
+          </nav>
+          <a href="/buyers.html" class="header-link-button desktop-only">Order Produce</a> </div>
+  </header>
+  <main>
+    <section class="about-hero">
+      <div class="about-hero-bg"></div>
+      <div class="about-hero-content">
+        <h1>
+          <span class="line-wrap"><span class="word animate-on-scroll animate-fade-in" data-animation-delay="0.1s">Our</span></span>
+          <span class="line-wrap"><span class="word animate-on-scroll animate-fade-in" data-animation-delay="0.25s">Story</span></span>
+        </h1>
+        <p class="subtitle animate-on-scroll animate-fade-in" data-animation-delay="0.4s">Three decades of feeding communities.</p>
+      </div>
+    </section>
+
+    <section class="about-section story-feature-block animate-on-scroll animate-fade-in">
+      <div class="about-container">
+        <div class="story-feature-image-container animate-on-scroll animate-scale-up">
+          <img src="/vintage-truck-produce.png" alt="Vintage pickup truck with boxes of fruit on a country road">
+        </div>
+        <p class="image-caption animate-on-scroll animate-fade-in" data-animation-delay="0.1s">
+          The original pickup truck used to deliver fruit, pictured at the family grove in 1994.
+        </p>
+        <div class="story-feature-text">
+          <h2 class="section-title animate-on-scroll animate-fade-in" data-animation-delay="0.2s">How It Started</h2>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.3s">
+            Sacred Earth Produce was started by Nico Brown in the summer of 1994 as a way to sell surplus fruit from his parents’ avocado and citrus grove in Southern California. With not many options for selling the fruit locally, Nico loaded up the back of his pickup with as many boxes of avocados and citrus as he could carry and headed north, stopping at independently owned grocery stores and markets off the interstate to offer his family’s fruit at a fair price. By the end of the trip, enough stores had said yes that he decided to make the drive again with more fruit the following week.
+          </p>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.4s">
+            The second trip was a success, too, and before long, Nico was making the same drive every week, stopping at the same stores, bringing whatever he could gather from his family’s trees. Some buyers even started calling ahead to make sure he’d set a few boxes aside for them.
+          </p>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.5s">
+            Eventually, there wasn’t enough fruit left on the family grove to keep up with demand. So Nico started asking his neighbors if he could pick from their trees, too. Many were glad to have the help. Like his family, they often had more fruit than they knew what to do with, and much of it was going to waste. Nico spent each week picking and filling his truck, before heading out with whatever he’d gathered.
+          </p>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.6s">
+            That was the beginning. And though the routes have shifted and the loads have grown, the core of what we do is still the same.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section story-feature-block alt-bg animate-on-scroll animate-fade-in">
+      <div class="about-container">
+        <div class="story-feature-image-container animate-on-scroll animate-scale-up">
+          <img src="/staff-of-life-display.png" alt="Sacred Earth Produce on display at Staff of Life store">
+        </div>
+        <p class="image-caption animate-on-scroll animate-fade-in" data-animation-delay="0.1s">
+          Fruit from Sacred Earth Produce on display at Staff of Life's Watsonville location.
+        </p>
+        <div class="story-feature-text">
+          <h2 class="section-title animate-on-scroll animate-fade-in" data-animation-delay="0.2s">Growth & Today</h2>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.3s">
+            Today, Sacred Earth Produce operates as a regional produce distributor based out of our hub in Los Angeles. We source directly from farms across California, focusing on small, family-run operations with a commitment to sustainable and regenerative growing practices. Many of the farms we work with don’t have access to traditional buyers or large distribution networks.
+          </p>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.4s">
+            This is still a family business. We continue to move fruit from the original trees where it all started, on the family grove in Southern California. The harvest from those trees still gets loaded onto our trucks, just like it did in the early days. Today, Nico manages a grove of his own on Rincon Mountain in Ventura County, working alongside his sons.
+          </p>
+          <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.5s">
+            Sacred Earth still works with many of the same buyers who took a chance on those first truckloads over thirty years ago. We’ve built relationships with new stores and brought on many new farms since then, but much of the original route still holds today.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section philosophy-section animate-on-scroll animate-fade-in">
+      <div class="about-container">
+        <h2 class="section-title animate-on-scroll animate-fade-in" data-animation-delay="0.1s">The Sacred Earth Way</h2>
+        <p class="animate-on-scroll animate-fade-in" data-animation-delay="0.2s">
+          Our commitment goes beyond just delivering produce. It's about cultivating a food system that's good for the earth, good for the growers, and good for our communities. This is the heart of what we do.
+        </p>
+        <div class="philosophy-grid">
+          <div class="philosophy-item animate-on-scroll animate-scale-up" data-animation-delay="0.35s">
+            <h3>Rooted in Sustainability</h3>
+            <p>We champion regenerative and sustainable farming practices that nourish the soil, protect biodiversity, and ensure healthy food for generations to come.</p>
+          </div>
+          <div class="philosophy-item animate-on-scroll animate-scale-up" data-animation-delay="0.45s">
+            <h3>Community Focused</h3>
+            <p>Our business is built on strong, direct relationships – with our dedicated farmers, our valued buyers, and the communities we serve. We believe in fair partnerships and a connected food system.</p>
+          </div>
+          <div class="philosophy-item animate-on-scroll animate-scale-up" data-animation-delay="0.55s">
+            <h3>Uncompromising Quality</h3>
+            <p>From the grove to your door, we are committed to providing the freshest, most flavorful produce. We take pride in the journey of every fruit and vegetable we handle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-cta-section animate-on-scroll animate-fade-in">
+      <div class="about-container">
+        <h2 class="section-title animate-on-scroll animate-fade-in" data-animation-delay="0.1s">Join the Sacred Earth Family</h2>
+        <p class="subtitle animate-on-scroll animate-fade-in" data-animation-delay="0.2s">
+          Whether you're looking to source exceptional local produce or you're a grower dedicated to sustainable farming, we’d love to work together toward a long-term, values-driven, and fruitful partnership.
+        </p>
+        <div class="cta-buttons">
+          <a href="/buyers.html" class="btn">Become a Buyer</a>
+          <a href="/farmers.html" class="btn secondary">Grow With Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <div class="footer-grid">
+          <div class="footer-col brand">
+              <h4>Sacred Earth Produce</h4>
+              <p>orders@sacredearthproduce.com</p>
+              <small class="desktop-only">© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+          </div>
+          <div class="footer-col">
+              <h4>Quick Links</h4>
+              <ul>
+                  <li><a href="/about.html" class="active">about</a></li>
+                  <li><a href="/how-it-works.html">how it works</a></li>
+                  <li><a href="/buyers.html">buyers</a></li>
+                  <li><a href="/farmers.html">farmers</a></li>
+                  <li><a href="/contact.html">contact</a></li>
+              </ul>
+          </div>
+          <div class="footer-col">
+              <h4>Join Our List</h4>
+              <p>Get weekly availability updates and news from our growers.</p>
+              <form>
+                  <input type="email" placeholder="Email Address" required>
+                  <button type="submit">sign up</button>
+              </form>
+              <small>We respect your privacy.</small>
+          </div>
+      </div>
+      <div class="footer-bottom mobile-only">
+          <small>© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+      </div>
+  </footer>
+  <script>
+    console.log("About page: Parallax hero JS added, CTA button text updated.");
+
+    const mBtn = document.querySelector('.mobile-nav-toggle');
+    const menu = document.querySelector('nav ul');
+    if (mBtn && menu) {
+      mBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = menu.classList.toggle('mobile-active');
+        mBtn.innerHTML = open ? '×' : '☰';
+        document.body.classList.toggle('no-scroll', open);
+      });
+      document.addEventListener('click', e => {
+        if (menu.classList.contains('mobile-active') && !menu.contains(e.target) && e.target !== mBtn) {
+          menu.classList.remove('mobile-active');
+          mBtn.innerHTML = '☰';
+          document.body.classList.remove('no-scroll');
+        }
+      });
+    }
+
+    // Intersection Observer for general scroll animations
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    if (window.IntersectionObserver) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            const delay = entry.target.dataset.animationDelay;
+            if (delay) {
+              entry.target.style.transitionDelay = delay;
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05 });
+
+      animatedElements.forEach(el => observer.observe(el));
+    } else {
+      console.warn("Intersection Observer not supported. All animated elements shown by default.");
+      animatedElements.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // Parallax for About Hero
+    const aboutHeroElement = document.querySelector('.about-hero');
+    const aboutHeroBg = document.querySelector('.about-hero-bg');
+    const aboutHeroContent = document.querySelector('.about-hero-content');
+
+    if (aboutHeroElement && aboutHeroBg && aboutHeroContent) {
+        let targetScrollYAbout = 0;
+        let currentScrollYAbout = 0;
+        const smoothingFactor = 0.1;
+
+        const updateParallaxAbout = () => {
+            const heroRect = aboutHeroElement.getBoundingClientRect();
+
+            if (heroRect.bottom < 0 || heroRect.top > window.innerHeight) {
+                 requestAnimationFrame(updateParallaxAbout);
+                return;
+            }
+
+            currentScrollYAbout += (targetScrollYAbout - currentScrollYAbout) * smoothingFactor;
+
+            aboutHeroBg.style.transform = `scale(1.25) translateY(${currentScrollYAbout * 0.15}px)`;
+            aboutHeroContent.style.transform = `translateY(${currentScrollYAbout * 0.07}px)`;
+
+            requestAnimationFrame(updateParallaxAbout);
+        };
+
+        window.addEventListener('scroll', () => {
+            targetScrollYAbout = window.scrollY;
+        }, { passive: true });
+
+        updateParallaxAbout();
+    }
+  </script>
+
+</body>
+</html>

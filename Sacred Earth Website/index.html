@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Sacred Earth Produce | Wholesale Produce Distributor</title>
+<link rel="canonical" href="https://sacredearthproduce.com/" />
+    <meta name="description" content="Sacred Earth Produce connects sustainable California family farms with wholesale buyers. Partner with us for a healthier, fairer food system. Since 1994.">
+    <link rel="preload" href="/logo.png" as="image" fetchpriority="high"> 
+    <link rel="preload" href="/hero.jpg" as="image" fetchpriority="high">
+    <link rel="preload" href="/grain.png" as="image" fetchpriority="low">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Domine:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand: #3f6134;
+            --brand-hover: #35512c;
+            --secondary: #678d4d;
+            --accent: #c96a2f;
+            --accent-hover: #a25428;
+            --bg: #fefdf9;
+            --bg-light: #f8faf6;
+            --bg-lighter: #f7fbf5;
+            --card: #fcfaf6;
+            --text: #222b25;
+            --text-light: #5a685f;
+            --border-light: #dde5d9;
+            --shadow: 0 4px 18px rgba(25,47,44,.07);
+            --t: cubic-bezier(0.33,1,0.68,1);
+            --t-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --t-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+            --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+            --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-in-out-sine: cubic-bezier(0.37, 0, 0.63, 1);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+        html { scroll-behavior: smooth }
+        body {
+            font-family: Inter, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 18px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            opacity: 0;
+            animation: fadeInPage 1s var(--t-smooth) forwards;
+        }
+        @keyframes fadeInPage { to { opacity: 1 } }
+        a { color: inherit; text-decoration: none; transition: color .3s var(--t-smooth) }
+        img, button { border: none; background: none; display: block; max-width: 100%; height: auto; } 
+        body.no-scroll { overflow: hidden }
+
+        .hero-bg, .hero-inner, .animate-on-scroll {
+            will-change: transform, opacity;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: opacity 1s var(--ease-out-quint), transform 1s var(--ease-out-quint);
+        }
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .desktop-only { display: inline-block }
+        .mobile-only { display: none }
+
+        /* MODIFIED: Updated .visually-hidden class */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip-path: inset(50%); /* Modern way */
+            border: 0;
+            white-space: nowrap; /* Prevent line breaks */
+        }
+
+        header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.07); position: relative; z-index: 20 }
+        .header-inner {
+            max-width: 1400px; margin: 0 auto; padding: 1.55rem 2rem;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .logo-link {
+            width: 180px; height: 90px; border-radius: 0;
+            overflow: hidden; margin-right: 3.5rem;
+            transition: transform .2s var(--t);
+        }
+        .logo-link img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            transition: transform .2s var(--t);
+        }
+        .logo-link:hover img { transform: scale(1.05) }
+        .mobile-nav-toggle { display: none; position: absolute; left: 2rem; top: 50%; transform: translateY(-50%); font-size: 2rem; cursor: pointer; color: var(--text) }
+        nav ul { list-style: none; display: flex; gap: 2rem }
+        nav a {
+            position: relative; font-weight: 500; font-size: 1.25rem; text-transform: lowercase;
+            padding: .32rem 0; transition: color .2s var(--t-smooth)
+        }
+        nav a::after {
+            content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+            background: var(--secondary); border-radius: 2px; transition: width .26s var(--t), left .26s var(--t), background-color .2s var(--t-smooth)
+        }
+        nav a:hover::after, nav a.active::after { width: 100%; left: 0; background-color: var(--brand) }
+        nav a:hover, nav a.active, nav a:active { color: var(--brand) }
+
+        .header-link-button {
+            background: var(--brand); color: #fff; border-radius: 9px;
+            font-family: Domine, serif; font-weight: 600; font-size: 1.05rem;
+            padding: .9rem 2.4rem;
+            margin-left: 5.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: inline-block; text-align: center;
+            transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+        }
+        .header-link-button:hover {
+            background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        @media (min-width: 701px) and (max-width: 950px) {
+            .header-inner { padding: 1.55rem 3rem; justify-content: center; }
+            .logo-link { margin-right: 1.6rem; width: 160px; height: 80px; flex-shrink: 0; }
+            nav ul { gap: 1rem; }
+            nav a { font-size: 1.1rem; white-space: nowrap; }
+            .header-link-button { margin-left: 3.1rem; padding: .8rem 1.8rem; font-size: 1rem; flex-shrink: 0; }
+        }
+
+        @media (max-width: 700px) {
+            .header-inner { flex-direction: column; padding: 1rem }
+            .logo-link { margin: 0.8rem auto 0.75rem;  }
+            .header-link-button { display: none }
+            .mobile-nav-toggle { display: block }
+            nav ul {
+                display: flex; flex-direction: column;
+                position: fixed; top: 0; left: 0; width: 80%; max-width: 280px; height: 100vh;
+                background: #fdfdfb url('/grain.png') repeat; background-size: 80px; 
+                border-left: 4px solid var(--secondary); transform: translateX(-100%);
+                visibility: hidden; opacity: 0;
+                transition: transform .35s var(--t-smooth), opacity .3s var(--t-smooth), visibility 0s linear .35s;
+                z-index: 101; gap: 0; padding: 3.5rem 0 1rem;
+            }
+            nav ul.mobile-active { transform: translateX(0); opacity: 1; visibility: visible; transition-delay: 0s; }
+            nav ul li { padding-left: 1.5rem }
+            nav ul li + li { margin-top: 2rem;  }
+            nav ul li a { font-size: 1.4rem; padding: .75rem 0 }
+            nav a::after { display: none !important;  }
+            .mobile-only { display: block }
+            .desktop-only { display: none }
+            .mobile-only.mobile-cta-wrapper {
+                margin-top: auto; position: sticky; bottom: 0; background: #fdfdfb;
+                padding: 1rem 0; text-align: center; display: list-item !important;
+            }
+            .mobile-only.mobile-cta-wrapper a {
+                display: inline-block; background: var(--brand); color: #fff;
+                border-radius: 9px; padding: .75rem 0; width: calc(100% - 4rem); margin: 0 2rem;
+                font-family: Domine, serif; font-size: 1.1rem; font-weight: 600;
+                transition: background-color .18s var(--t-smooth); text-decoration: none !important;
+            }
+            .mobile-only.mobile-cta-wrapper a:hover { background: var(--brand-hover) }
+        }
+
+        .hero {
+            position: relative; height: 85vh;
+            min-height: 545px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden; color: #fff; margin-bottom: 0;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('/hero.jpg') center/cover no-repeat; 
+            will-change: transform; transform-origin: top center; transform: scale(1.25) translateZ(0);
+        }
+        .hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, rgba(20,30,27,0.05) 0%, rgba(20,30,27,0.65) 100%);
+        }
+        .hero-inner {
+            position: relative; z-index: 2; max-width: 900px; padding: 0 1.25rem;
+            will-change: transform;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif; font-weight: 600;
+            font-size: clamp(30px, 5vw, 54px);
+            line-height: 1.25;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,.8);
+        }
+        .hero h1 > .animate-on-scroll {
+            display: inline-block;
+            margin-right: 0.2em;
+            margin-bottom: 0.1em;
+        }
+        .hero h1 > .animate-on-scroll:last-child {
+            margin-right: 0;
+        }
+
+        .hero .cta {
+            display: inline-block; background: var(--brand); color: #fff;
+            border-radius: 14px; font-family: Domine, serif; font-size: 1.2rem; font-weight: 600;
+            padding: .9rem 2.2rem;
+            box-shadow: 0 6px 32px rgba(0,0,0,.13);
+            transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+        }
+        .hero .cta:hover {
+            background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .about-wave {
+            background: var(--card); padding: 100px 1.5rem 60px; position: relative; overflow: hidden;
+        }
+        .wave-top { position: absolute; top: -1px; left: 0; width: 100%; height: 120px; fill: var(--card) }
+        .wave-top path { animation: wave 8s ease-in-out infinite }
+        @keyframes wave { 0% { transform: translate(0) } 50% { transform: translate(-20px,8px) } 100% { transform: translate(0) } }
+        .about-inner {
+            position: relative; max-width: 800px; margin: 0 auto; text-align: center;
+            background: var(--card); border-radius: 12px; padding: 2rem;
+        }
+        .about-inner::before {
+            content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border: 2px solid var(--secondary); border-radius: 50% 40% 55% 45%/45% 55% 45% 55%;
+            pointer-events: none; opacity: 0; transform: scale(0.9);
+            animation: blobBorderAppear 1s var(--t-elastic) forwards;
+        }
+        @keyframes blobBorderAppear { to { opacity: 1; transform: scale(1) } }
+        .about-inner h2 {
+            font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 600; margin-bottom: 20px; color: var(--brand);
+        }
+        .about-inner p {
+            font-size: 1.18rem; line-height: 1.66; margin-bottom: 32px; color: var(--text-light);
+        }
+        .about-btn {
+            display: inline-block; background: var(--brand); color: #fff; border-radius: 10px;
+            font-family: Domine, serif; font-weight: 600; font-size: 1.07rem; padding: 12px 38px;
+            box-shadow: 0 4px 15px rgba(63, 97, 52, 0.2);
+            transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+        }
+        .about-btn:hover {
+            background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 97, 52, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .about-wave { overflow: visible; padding-top: 120px; padding-bottom: 60px }
+            .about-inner::before { top: -8px; left: -8px; right: -8px; bottom: -8px }
+        }
+        @media (max-width: 400px) {
+            .about-inner::before { display: none }
+        }
+
+        .dual-cta-bg { background: var(--bg-light); padding: 3.5rem 0 2rem }
+        .dual-cta {
+            max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; flex-wrap: wrap; gap: 3rem;
+        }
+        .dual-cta > .animate-on-scroll {
+            display: flex; flex: 1 1 380px;
+        }
+        .card {
+            width: 100%; background: #fff; border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.07); padding: 3rem 2.5rem;
+            display: flex; flex-direction: column; gap: 1.5rem;
+            transition: transform 0.3s var(--ease-out-cubic), box-shadow 0.3s var(--t-smooth);
+        }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        .card h3 {
+            font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2rem; color: var(--brand);
+        }
+        .card p { flex: 1; font-size: 1.13rem; color: var(--text-light) }
+        .card .cta {
+            display: inline-block; align-self: flex-start; border-radius: 10px;
+            font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; padding: 1rem 2.4rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+        }
+        .card .cta:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .card.buy .cta { background: var(--brand); color: #fff }
+        .card.buy .cta:hover { background: var(--brand-hover) }
+        .card.sell .cta { background: var(--accent); color: #fff }
+        .card.sell .cta:hover { background: var(--accent-hover) }
+
+        .trusted {
+            background: linear-gradient(var(--bg-lighter) 0%, var(--bg) 100%);
+            padding: 3rem 1.5rem; margin-bottom: 2rem;
+        }
+        .trusted h2 {
+            font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2.2rem;
+            color: var(--brand); text-align: center; margin-bottom: 2.5rem;
+        }
+        .trusted-content {
+            max-width: 900px; margin: 0 auto; text-align: center;
+        }
+        .trusted ul {
+            list-style: none; display: inline-flex; flex-direction: column; gap: 2rem; padding: 0; text-align: left;
+        }
+        .bullet-item { display: flex; align-items: center; gap: 1.5rem }
+        .icon-wrap {
+            flex: 0 0 40px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+        }
+        .icon-wrap img { width: 100%; height: 100%; object-fit: contain; }
+        .trusted .text { 
+            font-size: 1.15rem; 
+            color: var(--text); 
+            font-weight: normal;
+        }
+
+        .quote-highlight { position: relative; height: 50vh; min-height: 300px; overflow: hidden; margin-bottom: 0 }
+        .quote-bg {
+            position: absolute; inset: 0;
+            background: url('/quote-bg.jpg') center/cover no-repeat scroll; 
+            filter: brightness(0.7);
+            transform: scale(1.35);
+            will-change: transform;
+        }
+        .quote-container {
+            position: relative; z-index: 1; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4vh 1.5rem 0;
+        }
+        .quote-text {
+            max-width: 900px; color: #fff; font-family: 'Playfair Display', serif; font-weight: 600;
+            font-size: clamp(1.4rem,4vw,2.2rem); line-height: 1.5;
+            opacity: 0; transform: scale(0.95); will-change: opacity, transform;
+            animation: quoteAppear 1s var(--t-smooth) forwards;
+        }
+        @keyframes quoteAppear { to { opacity: 1; transform: scale(1) } }
+
+        .quote-text blockquote {
+            margin: 0 0 0.75em 0;
+            padding: 0;
+            font-style: normal;
+        }
+
+        .quote-text footer {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+            font-weight: 400;
+            line-height: 1.4;
+            color: inherit;
+            opacity: 0.85;
+        }
+
+        .site-footer { background: #121212; color: #c9c9c9; padding: 3rem 1.5rem }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 2.5rem 3rem;
+        }
+        .footer-col {
+            display: flex; flex-direction: column; transition: transform .3s var(--t-smooth);
+        }
+        .footer-col:hover { transform: translateY(-5px) }
+        .footer-col.brand h4, .footer-col.brand p, .footer-col.brand small,
+        .footer-col h4, .footer-col ul li a, .footer-col form, .footer-col small { color: #fff }
+        .footer-col.brand small { margin-top: auto; opacity: .7; padding-top: 1rem }
+        .footer-col h4 {
+            font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;
+        }
+        .footer-col ul {
+            list-style: none; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;
+        }
+        .footer-col ul li a {
+            font-size: .95rem; text-transform: lowercase; 
+            transition: color .2s var(--t-smooth), padding-left .2s var(--t-smooth);
+        }
+        .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px }
+        .footer-col form { display: flex; gap: .65rem; margin: .9rem 0 }
+        .footer-col input[type=email] {
+            flex: 1; padding: .6rem .75rem; border: none; border-radius: 4px;
+            font-size: .95rem; background-color: #fff; color: var(--text);
+        }
+        .footer-col input[type=email]::placeholder { color: var(--text-light) }
+        .footer-col button {
+            padding: .62rem 1.15rem; border: none; border-radius: 4px;
+            background: var(--brand); color: #fff;
+            font-family: Domine, serif; font-weight: 600; font-size: .95rem; text-transform: lowercase; 
+            cursor: pointer; transition: background .18s var(--t), transform .18s var(--t);
+            display: inline-block;
+        }
+        .footer-col button:hover { background: var(--brand-hover); transform: scale(1.03) }
+        .footer-bottom.mobile-only { display: none }
+        @media (max-width: 700px) {
+            .desktop-only { display: none }
+            .mobile-only { display: block }
+            .footer-col.brand small { display: none }
+            .footer-grid { align-items: start }
+            .footer-grid > .footer-col:nth-child(2) > ul { flex-grow: 0 }
+            .footer-bottom.mobile-only {
+                margin-top:1.5rem; color:#fff; opacity:.7; text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <button class="mobile-nav-toggle mobile-only" aria-label="Menu">☰</button>
+            <a href="/index.html" class="logo-link"><img src="/logo.png" alt="Sacred Earth Produce Logo" loading="lazy"></a> 
+            <nav>
+                <ul>
+                    <li><a href="/about/">about</a></li>
+                    <li><a href="/how-it-works/">how it works</a></li>
+                    <li><a href="/buyers/">buyers</a></li>
+                    <li><a href="/farmers/">farmers</a></li>
+                    <li><a href="/contact/">contact</a></li>
+                    <li class="mobile-only mobile-cta-wrapper">
+                        <a href="/buyers/">Order Produce</a> </li>
+                </ul>
+            </nav>
+            <a href="/buyers.html" class="header-link-button desktop-only">Order Produce</a> </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-inner">
+            <h1>
+                <span class="animate-on-scroll" data-animation-delay="0.1s">Connecting</span>
+                <span class="animate-on-scroll" data-animation-delay="0.15s">sustainable</span>
+                <span class="animate-on-scroll" data-animation-delay="0.2s">family</span>
+                <span class="animate-on-scroll" data-animation-delay="0.25s">farms</span>
+                <span class="animate-on-scroll" data-animation-delay="0.3s">with</span>
+                <span class="animate-on-scroll" data-animation-delay="0.35s">institutional</span>
+                <span class="animate-on-scroll" data-animation-delay="0.4s">buyers</span>
+                <span class="animate-on-scroll" data-animation-delay="0.45s">to</span>
+                <span class="animate-on-scroll" data-animation-delay="0.5s">cultivate</span>
+                <span class="animate-on-scroll" data-animation-delay="0.55s">a</span>
+                <span class="animate-on-scroll" data-animation-delay="0.6s">healthier,</span>
+                <span class="animate-on-scroll" data-animation-delay="0.65s">fairer</span>
+                <span class="animate-on-scroll" data-animation-delay="0.7s">food</span>
+                <span class="animate-on-scroll" data-animation-delay="0.75s">system.</span>
+            </h1>
+            <div class="animate-on-scroll" data-animation-delay="0.85s" style="display: inline-block;">
+                <a href="/how-it-works.html" class="cta">Discover Our Process</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-wave">
+        <svg class="wave-top" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0 0 H1200 V60 C900 100 300 20 0 60 Z"/>
+        </svg>
+        <div class="about-inner animate-on-scroll" data-animation-delay="0.2s">
+            <h2>Who We Are</h2>
+            <p>
+                Sacred Earth Produce is a family-run distributor based in Southern California. We started in 1994 with a pickup truck loaded with fruit from our own grove. Today, we source directly from small farms across the state and move produce to buyers who care about where their food comes from. Our focus is on real relationships, fair sourcing, and keeping the food system local and honest.
+            </p>
+            <a href="/about.html" class="about-btn">About Us</a>
+        </div>
+    </section>
+
+    <section class="dual-cta-bg" id="explore-connections">
+        <div class="dual-cta">
+            <div class="animate-on-scroll" data-animation-delay="0.2s">
+                <div class="card buy">
+                    <h3>Interested in <span class="action-buy">Buying?</span></h3>
+                    <p>We send out our price list weekly. Order by email, text, or call.</p>
+                    <a href="/buyers.html" class="cta">Order Produce</a>
+                </div>
+            </div>
+            <div class="animate-on-scroll" data-animation-delay="0.3s">
+                <div class="card sell">
+                    <h3>Interested in <span class="action-sell">Selling?</span></h3>
+                    <p>Tell us what's available and we'll handle the rest.</p>
+                    <a href="/farmers.html" class="cta">Supply Produce</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trusted">
+        <h2 class="animate-on-scroll" data-animation-delay="0.1s">Trusted Network</h2>
+        <div class="trusted-content">
+            <ul>
+                <li class="bullet-item animate-on-scroll" data-animation-delay="0.2s">
+                    <span class="icon-wrap"><img src="/orange.png" alt="Organic produce icon" loading="lazy"></span>
+                    <span class="text">Over 30 years growing and sourcing organic avocados, citrus, and seasonal produce.</span>
+                </li>
+                <li class="bullet-item animate-on-scroll" data-animation-delay="0.3s">
+                    <span class="icon-wrap"><img src="/orange.png" alt="Cold storage icon" loading="lazy"></span>
+                    <span class="text">Cold storage and refrigerated delivery from our hub in Los Angeles.</span>
+                </li>
+                <li class="bullet-item animate-on-scroll" data-animation-delay="0.4s">
+                    <span class="icon-wrap"><img src="/orange.png" alt="Delivery route icon" loading="lazy"></span>
+                    <span class="text">Established delivery network serving Southern California, the Bay Area, and beyond.</span>
+                </li>
+                <li class="bullet-item animate-on-scroll" data-animation-delay="0.5s">
+                    <span class="icon-wrap"><img src="/orange.png" alt="Handshake icon" loading="lazy"></span>
+                    <span class="text">Built on long-standing relationships with farms, buyers, and drivers alike.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="quote-highlight">
+        <h2 class="visually-hidden">A Moment of Reflection</h2>
+        <div class="quote-bg"></div>
+        <div class="quote-container">
+            <div class="quote-text">
+                <blockquote>“The Earth is what we all have in common.”</blockquote>
+                <footer>― Wendell Berry</footer>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col brand">
+                <h4>Sacred Earth Produce</h4>
+                <p>orders@sacredearthproduce.com</p>
+                <small class="desktop-only">© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/about/">about</a></li>
+                    <li><a href="/how-it-works/">how it works</a></li>
+                    <li><a href="/buyers/">buyers</a></li>
+                    <li><a href="/farmers/">farmers</a></li>
+                    <li><a href="/contact/">contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Join Our List</h4>
+                <p>Get weekly availability updates and news from our growers.</p>
+                <form>
+                    <input type="email" placeholder="Email Address" required>
+                    <button type="submit">sign up</button>
+                </form>
+                <small>We respect your privacy.</small>
+            </div>
+        </div>
+        <div class="footer-bottom mobile-only">
+            <small>© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation
+        document.addEventListener('click', e => {
+            const mBtn = document.querySelector('.mobile-nav-toggle');
+            const menu = document.querySelector('nav ul');
+            if (mBtn && menu) {
+                if (e.target === mBtn) {
+                    const open = menu.classList.toggle('mobile-active');
+                    mBtn.textContent = open ? '×' : '☰';
+                    document.body.classList.toggle('no-scroll', open);
+                } else if (menu.classList.contains('mobile-active') && !menu.contains(e.target) && e.target !== mBtn) {
+                    menu.classList.remove('mobile-active');
+                    mBtn.textContent = '☰';
+                    document.body.classList.remove('no-scroll');
+                }
+            }
+        });
+
+        // Parallax hero (optimized)
+        (() => {
+            const heroBg = document.querySelector('.hero-bg');
+            const heroIn = document.querySelector('.hero-inner');
+            if (!heroBg || !heroIn) return;
+            let tgt = 0, cur = 0;
+            const smoothing = 0.1;
+            window.addEventListener('scroll', e => { tgt = window.scrollY }, { passive: true });
+            const loop = () => {
+                cur += (tgt - cur) * smoothing;
+                const yBg = -(cur * 0.15);
+                const yIn = -(cur * 0.07);
+                heroBg.style.transform = `scale(1.25) translateZ(0) translateY(${yBg}px)`;
+                heroIn.style.transform = `translateY(${yIn}px)`;
+                requestAnimationFrame(loop);
+            };
+            requestAnimationFrame(loop);
+        })();
+
+        // Scroll animations
+        (() => {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const delay = el.dataset.animationDelay;
+                        if (delay) el.style.transitionDelay = delay;
+                        el.classList.add('is-visible');
+                        obs.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.05 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        })();
+
+        // Parallax for quote background
+        (() => {
+            const quoteBgElement = document.querySelector('.quote-bg');
+            if (!quoteBgElement) return;
+
+            const scaleFactor = 1.35;
+            let targetTranslateY = 0;
+            let currentTranslateY = 0;
+            const ease = 0.07;
+
+            let containerHeight = 0;
+            let maxDisplacement = 0;
+
+            function updateDimensionsAndLimits() {
+                if (quoteBgElement.parentElement) {
+                    containerHeight = quoteBgElement.parentElement.offsetHeight;
+                    maxDisplacement = (containerHeight * scaleFactor - containerHeight) / 2;
+                }
+            }
+
+            updateDimensionsAndLimits();
+            window.addEventListener('resize', updateDimensionsAndLimits, { passive: true });
+
+            window.addEventListener('scroll', () => {
+                const rect = quoteBgElement.getBoundingClientRect();
+                targetTranslateY = rect.top * 0.08;
+            }, { passive: true });
+
+            const animate = () => {
+                currentTranslateY += (targetTranslateY - currentTranslateY) * ease;
+                const clampedTranslateY = Math.max(-maxDisplacement, Math.min(maxDisplacement, currentTranslateY));
+
+                quoteBgElement.style.transform = `scale(${scaleFactor}) translateY(${clampedTranslateY}px)`;
+                requestAnimationFrame(animate);
+            };
+            animate();
+        })();
+        console.log("Index.html: Hero CTA updated to 'Discover Our Process'.");
+    </script>
+</body>
+</html>

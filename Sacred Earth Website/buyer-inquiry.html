@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Wholesale Produce Inquiry | Sacred Earth Produce</title>
+  <meta name="description" content="Ready to source fresh, sustainably-grown produce? Fill out the Sacred Earth Produce wholesale buyer inquiry form to get started with our California farm network.">
+  <link rel="preload" href="/logo.png" as="image">
+  <link rel="preload" href="/grain.png" as="image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Domine:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #3f6134;
+      --brand-hover: #35512c;
+      --secondary: #678d4d;
+      --accent: #c96a2f;
+      --accent-hover: #a25428;
+      --bg: #fefdf9;
+      --bg-light: #f8faf6;
+      --bg-lighter: #f7fbf5;
+      --card: #fcfaf6;
+      --text: #222b25;
+      --text-light: #5a685f;
+      --border-light: #dde5d9;
+      --white: #ffffff;
+      --shadow: 0 4px 18px rgba(25,47,44,.07);
+      --t: cubic-bezier(0.33,1,0.68,1);
+      --t-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --t-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1); /* Added */
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+    html { scroll-behavior: smooth; overflow-y: auto; }
+    body {
+      font-family:Inter,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-size:18px;
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+      opacity: 1; 
+    }
+    a { color:inherit; text-decoration:none; transition: color 0.3s var(--t-smooth); }
+    img, button { display: block; max-width: 100%; height: auto; border: none; background: none; } 
+    body.no-scroll { overflow:hidden }
+
+    .mobile-only { display: none; }
+    .desktop-only { display: inline-block; }
+
+    header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.07); position: sticky; top: 0; z-index: 100 }
+    .header-inner {
+        max-width: 1400px; margin: 0 auto; padding: 1.55rem 2rem;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .logo-link {
+        width: 180px; height: 90px; border-radius: 0;
+        overflow: hidden; margin-right: 3.5rem; transition: transform .2s var(--t);
+    }
+    .logo-link img {
+        width: 100%; height: 100%; object-fit: contain;
+        transition: transform .2s var(--t);
+    }
+    .logo-link:hover img { transform: scale(1.05) }
+    .mobile-nav-toggle { display: none; position: absolute; left: 2rem; top: 50%; transform: translateY(-50%); font-size: 2rem; cursor: pointer; color: var(--text) }
+    nav ul { list-style: none; display: flex; gap: 2rem }
+    nav a {
+        position: relative; font-weight: 500; font-size: 1.25rem; text-transform: lowercase;
+        padding: .32rem 0; transition: color .2s var(--t-smooth)
+    }
+    nav a::after {
+        content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+        background: var(--secondary); border-radius: 2px; transition: width .26s var(--t), left .26s var(--t), background-color .2s var(--t-smooth)
+    }
+    nav a:hover::after, nav a.active::after { width: 100%; left: 0; background-color: var(--brand) }
+    nav a:hover, nav a.active, nav a:active { color: var(--brand) }
+
+    .header-link-button {
+        background: var(--brand); color: #fff; border-radius: 9px;
+        font-family: Domine, serif; font-weight: 600; font-size: 1.05rem;
+        padding: .9rem 2.4rem; margin-left: 5.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: inline-block; text-align: center;
+        transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+    }
+    .header-link-button:hover {
+        background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    @media (min-width: 701px) and (max-width: 950px) {
+        .header-inner { padding: 1.55rem 3rem; justify-content: center; }
+        .logo-link { margin-right: 1.6rem; width: 160px; height: 80px; flex-shrink: 0; }
+        nav ul { gap: 1rem; }
+        nav a { font-size: 1.1rem; white-space: nowrap; }
+        .header-link-button { margin-left: 3.1rem; padding: .8rem 1.8rem; font-size: 1rem; flex-shrink: 0; }
+    }
+
+    @media (max-width: 700px) {
+      .header-inner { flex-direction: column; padding: 1rem }
+      .logo-link { margin: 0.8rem auto 0.75rem; }
+      .header-link-button { display: none }
+      .mobile-nav-toggle { display: block }
+      nav ul {
+        display: flex; flex-direction: column; position: fixed; top: 0; left: 0;
+        width: 80%; max-width: 280px; height: 100vh;
+        background: #fdfdfb url('/grain.png') repeat; background-size: 80px;
+        border-left: 4px solid var(--secondary); transform: translateX(-100%);
+        visibility: hidden; opacity: 0;
+        transition: transform .35s var(--t-smooth), opacity .3s var(--t-smooth), visibility 0s linear .35s;
+        z-index: 101; gap: 0; padding: 3.5rem 0 1rem;
+      }
+      nav ul.mobile-active { transform: translateX(0); opacity: 1; visibility: visible; transition-delay: 0s; }
+      nav ul li { padding-left: 1.5rem }
+      nav ul li + li { margin-top: 2rem; }
+      nav ul li a { font-size: 1.4rem; padding: .75rem 0 }
+      nav a::after { display: none !important; }
+      .mobile-only { display: block }
+      .desktop-only { display: none }
+      .mobile-only.mobile-cta-wrapper {
+        margin-top: auto; position: sticky; bottom: 0; background: #fdfdfb;
+        padding: 1rem 0; text-align: center; display: list-item !important;
+      }
+      .mobile-only.mobile-cta-wrapper a {
+        display: inline-block; background: var(--brand); color: #fff;
+        border-radius: 9px; padding: .75rem 0; width: calc(100% - 4rem); margin: 0 2rem;
+        font-family: Domine, serif; font-size: 1.1rem; font-weight: 600;
+        transition: background-color .18s var(--t-smooth); text-decoration: none !important;
+      }
+      .mobile-only.mobile-cta-wrapper a:hover { background: var(--brand-hover) }
+    }
+
+    .content-section { padding: 4rem 2rem; }
+    .container { max-width: 700px; margin: 0 auto; }
+    .section-heading { text-align: center; margin-bottom: 2.5rem; }
+    .section-heading h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--brand); margin-bottom: 1rem; line-height: 1.2;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+    }
+    .section-heading p.lead {
+      font-size: 1.1rem; color: var(--text-light);
+      max-width: 600px; margin: 0 auto 2rem auto;
+    }
+
+    .buyer-inquiry-form {
+      background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow);
+    }
+    .form-section { margin-bottom: 2rem; }
+    .form-section:last-of-type { margin-bottom: 1rem; }
+    .form-section h3 {
+      font-family: 'Domine', serif; color: var(--secondary); font-size: 1.3rem;
+      margin-bottom: 1.2rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-light);
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); font-size: 1rem;
+    }
+    .form-group label sup { color: var(--accent); font-weight: normal; }
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--border-light);
+      border-radius: 6px; font-size: 1rem; font-family: inherit;
+      background-color: var(--bg-light); color: var(--text);
+      transition: border-color 0.2s var(--t-smooth), box-shadow 0.2s var(--t-smooth);
+    }
+    .form-group input[type="text"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group input[type="tel"]:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px rgba(63, 97, 52, 0.2);
+    }
+    .form-group select {
+        appearance: none; -webkit-appearance: none; -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235a685f' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat; background-position: right 0.9rem center; background-size: 0.8em; padding-right: 2.5rem;
+    }
+    .form-group .checkbox-group { padding-top: 0.3rem; }
+    .form-group .checkbox-group label {
+      display: flex; align-items: center; font-weight: normal;
+      margin-bottom: 0.4rem; font-size: 0.95rem;
+    }
+    .form-group .checkbox-group input[type="checkbox"] {
+      width: auto; margin-right: 0.6rem; accent-color: var(--brand); flex-shrink: 0;
+    }
+
+    .submit-button-wrapper { text-align: center; margin-top: 2rem; }
+    .submit-button {
+      background: var(--accent); color: var(--white); padding: 0.9rem 2.2rem;
+      border-radius: 8px; font-family: 'Domine', serif; font-weight: 600;
+      font-size: 1.1rem; text-decoration: none; display: inline-block;
+      transition: background .2s var(--t-smooth), transform .2s var(--t-elastic);
+      cursor: pointer; border: none;
+    }
+    .submit-button:hover { background: var(--accent-hover); transform: scale(1.03); }
+    small.optional-note { display: inline; font-weight:normal; color: var(--text-light); font-size:0.85em; }
+
+    .site-footer { background: #121212; color: #c9c9c9; padding: 3rem 1.5rem; margin-top: 4rem; }
+    .footer-grid {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 2.5rem 3rem;
+    }
+    .footer-col { display: flex; flex-direction: column; transition: transform .3s var(--t-smooth); }
+    .footer-col:hover { transform: translateY(-5px) }
+    .footer-col.brand h4, .footer-col.brand p, .footer-col.brand small,
+    .footer-col h4, .footer-col ul li a, .footer-col form, .footer-col small { color: #fff }
+    .footer-col.brand small { margin-top: auto; opacity: .7; padding-top: 1rem }
+    .footer-col h4 {
+        font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1; }
+    .footer-col ul li a {
+        font-size: .95rem; transition: color .2s var(--t-smooth), padding-left .2s var(--t-smooth); text-transform: lowercase; 
+    }
+    .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px }
+    .footer-col form { display: flex; gap: .65rem; margin: .9rem 0 }
+    .footer-col input[type=email] {
+        flex: 1; padding: .6rem .75rem; border: none; border-radius: 4px;
+        font-size: .95rem; background-color: #fff; color: var(--text);
+    }
+    .footer-col input[type=email]::placeholder { color: var(--text-light) }
+    .footer-col button { 
+        padding: .62rem 1.15rem; border: none; border-radius: 4px; background: var(--brand); color: #fff;
+        font-family: Domine, serif; font-weight: 600; font-size: .95rem; text-transform: lowercase; 
+        cursor: pointer; transition: background .18s var(--t), transform .18s var(--t); display: inline-block;
+    }
+    .footer-col button:hover { background: var(--brand-hover); transform: scale(1.03) }
+    .footer-bottom.mobile-only { display: none }
+    @media (max-width: 700px) {
+      .desktop-only { display: none }
+      .mobile-only { display: block }
+      .footer-col.brand small { display: none }
+      .footer-grid { align-items: start; }
+      .footer-grid > .footer-col:nth-child(2) > ul { flex-grow: 0; }
+      .footer-bottom.mobile-only { margin-top: 1.5rem; color: var(--white); opacity: .7; text-align: center; }
+      .buyer-inquiry-form {padding: 1.5rem;}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+      <div class="header-inner">
+          <button class="mobile-nav-toggle mobile-only" aria-label="Menu">☰</button>
+          <a href="/index.html" class="logo-link"><img src="/logo.png" alt="Sacred Earth Produce Logo" loading="lazy"></a>
+          <nav>
+              <ul>
+                  <li><a href="/about.html">about</a></li>
+                  <li><a href="/how-it-works.html">how it works</a></li>
+                  <li><a href="/buyers.html" class="active">buyers</a></li> 
+                  <li><a href="/farmers.html">farmers</a></li>
+                  <li><a href="/contact.html">contact</a></li>
+                  <li class="mobile-only mobile-cta-wrapper">
+                      <a href="/buyers.html">Order Produce</a> </li>
+              </ul>
+          </nav>
+          <a href="/buyers.html" class="header-link-button desktop-only">Order Produce</a> </div>
+  </header>
+  <main>
+    <section class="content-section">
+      <div class="container">
+        <div class="section-heading">
+          <h1>Wholesale Produce Inquiry</h1>
+          <p class="lead">Interested in sourcing high-quality, sustainably-grown produce for your business? Please provide some basic information below, and we'll get in touch to discuss your needs.</p>
+        </div>
+
+        <form name="buyer-inquiry" method="POST" class="buyer-inquiry-form" data-netlify="true" data-netlify-honeypot="bot-field" action="/thank-you/"> 
+          <div class="form-section">
+            <h3>Your Contact Information</h3>
+            <div class="form-group">
+              <label for="contact-name">Contact Person Name <sup>*</sup></label>
+              <input type="text" id="contact-name" name="contact_name" required>
+            </div>
+            <div class="form-group">
+              <label for="business-name">Business Name <sup>*</sup></label>
+              <input type="text" id="business-name" name="business_name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address <sup>*</sup></label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number <sup>*</sup></label>
+              <input type="text" id="phone" name="phone" required>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>About Your Business & Needs</h3>
+            <div class="form-group">
+              <label for="business-type">Type of Business <sup>*</sup></label>
+              <select id="business-type" name="business_type" required>
+                <option value="" disabled selected>-- Please select --</option>
+                <option value="Restaurant">Restaurant</option>
+                <option value="Caterer">Caterer</option>
+                <option value="Grocer/Retail">Grocer/Retail Store</option>
+                <option value="Food Service">Food Service (School, Hospital, etc.)</option>
+                <option value="Co-op">Co-op</option>
+                <option value="Distributor">Distributor</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Primary Produce Categories of Interest <small class="optional-note">(Select all that apply) <sup>*</sup></small></label>
+              <p style="font-size: 0.9em; color: var(--text-light); margin-bottom: 0.75rem;">Our availability is seasonal and may include more than listed. Let us know your general interests!</p>
+              <div class="checkbox-group">
+                  <label><input type="checkbox" name="produce_interest[]" value="Alliums"> Alliums (e.g., Garlic, Onions)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Apples & Pears"> Apples & Pears</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Avocados"> Avocados (e.g., Hass, Fuerte)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Berries"> Berries (e.g., Blueberries)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Brassicas"> Brassicas (e.g., Cabbage, Broccoli, Kale)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Citrus"> Citrus (e.g., Lemons, Oranges, Grapefruit, Limes, Tangerines)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Fresh Legumes"> Fresh Legumes (Beans & Peas)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Fruiting Vegetables"> Fruiting Vegetables (e.g., Tomatoes, Cucumbers, Peppers, Eggplant)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Ginger & Turmeric"> Ginger & Turmeric</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Herbs"> Herbs</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Leafy Greens"> Leafy Greens (e.g., Lettuces, Spinach, Chard)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Melons"> Melons (e.g., Cantaloupe, Watermelon)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Microgreens"> Microgreens</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Mushrooms"> Mushrooms</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Potatoes & Sweet Potatoes"> Potatoes & Sweet Potatoes</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Root Vegetables"> Root Vegetables (e.g., Beets, Carrots, Jicama, Burdock Root)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Squash"> Squash (e.g., Acorn, Honeynut, Zucchini)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Stone Fruit"> Stone Fruit (e.g., Cherries, Peaches, Plums)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Sweet Corn"> Sweet Corn</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Tropical & Other Fruits"> Tropical & Other Fruits (e.g., Dates, Pineapples, Cherimoya, Coconuts)</label>
+                  <label><input type="checkbox" name="produce_interest[]" value="Other Produce"> Other Produce (Please specify below)</label>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: -0.25rem;"> <textarea id="other-produce-details" name="other_produce_details" rows="3" placeholder="List any other specific items or needs here..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ordering-frequency">Typical Ordering Frequency <small class="optional-note">(Optional)</small></label>
+              <select id="ordering-frequency" name="ordering_frequency">
+                <option value="">-- Please select if applicable --</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Bi-weekly">Bi-weekly (Every 2 weeks)</option>
+                <option value="Monthly">Monthly</option>
+                <option value="As Needed">As Needed/Occasional</option>
+              </select>
+            </div>
+          </div>
+
+          <p style="display:none;">
+            <label>
+              Don’t fill this out if you’re human: <input name="bot-field">
+            </label>
+          </p>
+
+          <div class="submit-button-wrapper">
+            <button type="submit" class="submit-button">Submit</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <div class="footer-grid">
+          <div class="footer-col brand">
+              <h4>Sacred Earth Produce</h4>
+              <p>orders@sacredearthproduce.com</p>
+              <small class="desktop-only">© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+          </div>
+          <div class="footer-col">
+              <h4>Quick Links</h4>
+              <ul>
+                  <li><a href="/about.html">about</a></li>
+                  <li><a href="/how-it-works.html">how it works</a></li>
+                  <li><a href="/buyers.html" class="active">buyers</a></li> 
+                  <li><a href="/farmers.html">farmers</a></li>
+                  <li><a href="/contact.html">contact</a></li>
+              </ul>
+          </div>
+          <div class="footer-col">
+              <h4>Join Our List</h4>
+              <p>Get weekly availability updates and news from our growers.</p>
+              <form>
+                  <input type="email" placeholder="Email Address" required>
+                  <button type="submit">sign up</button>
+              </form>
+              <small>We respect your privacy.</small>
+          </div>
+      </div>
+      <div class="footer-bottom mobile-only">
+          <small>© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+      </div>
+  </footer>
+  <script>
+    // Mobile Navigation Toggle
+    const mBtn = document.querySelector('.mobile-nav-toggle');
+    const menu = document.querySelector('nav ul');
+    if (mBtn && menu) {
+      mBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = menu.classList.toggle('mobile-active');
+        mBtn.innerHTML = open ? '×' : '☰';
+        document.body.classList.toggle('no-scroll', open);
+      });
+      document.addEventListener('click', e => {
+        if (menu.classList.contains('mobile-active') && !menu.contains(e.target) && e.target !== mBtn) {
+          menu.classList.remove('mobile-active');
+          mBtn.innerHTML = '☰';
+          document.body.classList.remove('no-scroll');
+        }
+      });
+    }
+     console.log("Buyer Inquiry Script Loaded (Header/Footer Updated)");
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Thank You | Sacred Earth Produce</title>
+  <meta name="description" content="Thank you for contacting Sacred Earth Produce! We've received your inquiry and will be in touch with you as soon as possible.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preload" href="/logo.png" as="image">
+  <link rel="preload" href="/grain.png" as="image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Domine:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #3f6134;
+      --brand-hover: #35512c;
+      --secondary: #678d4d;
+      --accent: #c96a2f;
+      --accent-hover: #a25428;
+      --bg: #fefdf9;
+      --bg-light: #f8faf6;
+      --bg-lighter: #f7fbf5;
+      --card: #fcfaf6;
+      --text: #222b25;
+      --text-light: #5a685f;
+      --border-light: #dde5d9;
+      --white: #ffffff;
+      --shadow: 0 4px 18px rgba(25,47,44,.07);
+      --t: cubic-bezier(0.33,1,0.68,1);
+      --t-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --t-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+    html { scroll-behavior: smooth; overflow-y: auto; }
+    body {
+      font-family:Inter,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-size:18px;
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+      opacity: 1; 
+    }
+    a { color:inherit; text-decoration:none; transition: color 0.3s var(--t-smooth); }
+    img, button { display: block; max-width: 100%; height: auto; border: none; background: none; } 
+    body.no-scroll { overflow:hidden }
+
+    .mobile-only { display: none; }
+    .desktop-only { display: inline-block; }
+
+    header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.07); position: sticky; top: 0; z-index: 100 }
+    .header-inner {
+        max-width: 1400px; margin: 0 auto; padding: 1.55rem 2rem;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .logo-link {
+        width: 180px; height: 90px; border-radius: 0;
+        overflow: hidden; margin-right: 3.5rem; transition: transform .2s var(--t);
+    }
+    .logo-link img {
+        width: 100%; height: 100%; object-fit: contain;
+        transition: transform .2s var(--t);
+    }
+    .logo-link:hover img { transform: scale(1.05) }
+    .mobile-nav-toggle { display: none; position: absolute; left: 2rem; top: 50%; transform: translateY(-50%); font-size: 2rem; cursor: pointer; color: var(--text) }
+    nav ul { list-style: none; display: flex; gap: 2rem }
+    nav a {
+        position: relative; font-weight: 500; font-size: 1.25rem; text-transform: lowercase;
+        padding: .32rem 0; transition: color .2s var(--t-smooth)
+    }
+    nav a::after {
+        content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+        background: var(--secondary); border-radius: 2px; transition: width .26s var(--t), left .26s var(--t), background-color .2s var(--t-smooth)
+    }
+    nav a:hover::after, nav a.active::after { width: 100%; left: 0; background-color: var(--brand) }
+    nav a:hover, nav a.active, nav a:active { color: var(--brand) }
+
+    .header-link-button {
+        background: var(--brand); color: #fff; border-radius: 9px;
+        font-family: Domine, serif; font-weight: 600; font-size: 1.05rem;
+        padding: .9rem 2.4rem; margin-left: 5.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: inline-block; text-align: center;
+        transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth);
+    }
+    .header-link-button:hover {
+        background: var(--brand-hover); transform: scale(1.05) translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    @media (min-width: 701px) and (max-width: 950px) {
+        .header-inner { padding: 1.55rem 3rem; justify-content: center; }
+        .logo-link { margin-right: 1.6rem; width: 160px; height: 80px; flex-shrink: 0; }
+        nav ul { gap: 1rem; }
+        nav a { font-size: 1.1rem; white-space: nowrap; }
+        .header-link-button { margin-left: 3.1rem; padding: .8rem 1.8rem; font-size: 1rem; flex-shrink: 0; }
+    }
+
+    @media (max-width: 700px) {
+      .header-inner { flex-direction: column; padding: 1rem }
+      .logo-link { margin: 0.8rem auto 0.75rem; }
+      .header-link-button { display: none }
+      .mobile-nav-toggle { display: block }
+      nav ul {
+        display: flex; flex-direction: column; position: fixed; top: 0; left: 0;
+        width: 80%; max-width: 280px; height: 100vh;
+        background: #fdfdfb url('/grain.png') repeat; background-size: 80px;
+        border-left: 4px solid var(--secondary); transform: translateX(-100%);
+        visibility: hidden; opacity: 0;
+        transition: transform .35s var(--t-smooth), opacity .3s var(--t-smooth), visibility 0s linear .35s;
+        z-index: 101; gap: 0; padding: 3.5rem 0 1rem;
+      }
+      nav ul.mobile-active { transform: translateX(0); opacity: 1; visibility: visible; transition-delay: 0s; }
+      nav ul li { padding-left: 1.5rem }
+      nav ul li + li { margin-top: 2rem; }
+      nav ul li a { font-size: 1.4rem; padding: .75rem 0 }
+      nav a::after { display: none !important; }
+      .mobile-only { display: block }
+      .desktop-only { display: none }
+      .mobile-only.mobile-cta-wrapper {
+        margin-top: auto; position: sticky; bottom: 0; background: #fdfdfb;
+        padding: 1rem 0; text-align: center; display: list-item !important;
+      }
+      .mobile-only.mobile-cta-wrapper a {
+        display: inline-block; background: var(--brand); color: #fff;
+        border-radius: 9px; padding: .75rem 0; width: calc(100% - 4rem); margin: 0 2rem;
+        font-family: Domine, serif; font-size: 1.1rem; font-weight: 600;
+        transition: background-color .18s var(--t-smooth); text-decoration: none !important;
+      }
+      .mobile-only.mobile-cta-wrapper a:hover { background: var(--brand-hover) }
+    }
+
+    .content-section { padding: 4rem 2rem; }
+    .container { max-width: 700px; margin: 0 auto; }
+    .section-heading { text-align: center; margin-bottom: 2.5rem; }
+    .section-heading h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--brand); margin-bottom: 1rem; line-height: 1.2;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+    }
+    .section-heading p.lead {
+      font-size: 1.1rem; color: var(--text-light);
+      max-width: 600px; margin: 0 auto 2rem auto;
+    }
+    
+    .site-footer { background: #121212; color: #c9c9c9; padding: 3rem 1.5rem; margin-top: 4rem; }
+    .footer-grid {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 2.5rem 3rem;
+    }
+    .footer-col { display: flex; flex-direction: column; transition: transform .3s var(--t-smooth); }
+    .footer-col:hover { transform: translateY(-5px) }
+    .footer-col.brand h4, .footer-col.brand p, .footer-col.brand small,
+    .footer-col h4, .footer-col ul li a, .footer-col form, .footer-col small { color: #fff }
+    .footer-col.brand small { margin-top: auto; opacity: .7; padding-top: 1rem }
+    .footer-col h4 {
+        font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1; }
+    .footer-col ul li a {
+        font-size: .95rem; transition: color .2s var(--t-smooth), padding-left .2s var(--t-smooth); text-transform: lowercase; 
+    }
+    .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px }
+    .footer-col form { display: flex; gap: .65rem; margin: .9rem 0 }
+    .footer-col input[type=email] {
+        flex: 1; padding: .6rem .75rem; border: none; border-radius: 4px;
+        font-size: .95rem; background-color: #fff; color: var(--text);
+    }
+    .footer-col input[type=email]::placeholder { color: var(--text-light) }
+    .footer-col button { 
+        padding: .62rem 1.15rem; border: none; border-radius: 4px; background: var(--brand); color: #fff;
+        font-family: Domine, serif; font-weight: 600; font-size: .95rem; text-transform: lowercase; 
+        cursor: pointer; transition: background .18s var(--t), transform .18s var(--t); display: inline-block;
+    }
+    .footer-col button:hover { background: var(--brand-hover); transform: scale(1.03) }
+    .footer-bottom.mobile-only { display: none }
+    @media (max-width: 700px) {
+      .desktop-only { display: none }
+      .mobile-only { display: block }
+      .footer-col.brand small { display: none }
+      .footer-grid { align-items: start; }
+      .footer-grid > .footer-col:nth-child(2) > ul { flex-grow: 0; }
+      .footer-bottom.mobile-only { margin-top: 1.5rem; color: var(--white); opacity: .7; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+      <div class="header-inner">
+          <button class="mobile-nav-toggle mobile-only" aria-label="Menu">☰</button>
+          <a href="/index.html" class="logo-link"><img src="/logo.png" alt="Sacred Earth Produce Logo" loading="lazy"></a>
+          <nav>
+              <ul>
+                  <li><a href="/about.html">about</a></li>
+                  <li><a href="/how-it-works.html">how it works</a></li>
+                  <li><a href="/buyers.html">buyers</a></li> 
+                  <li><a href="/farmers.html">farmers</a></li>
+                  <li><a href="/contact.html">contact</a></li>
+                  <li class="mobile-only mobile-cta-wrapper">
+                      <a href="/buyers.html">Order Produce</a> </li>
+              </ul>
+          </nav>
+          <a href="/buyers.html" class="header-link-button desktop-only">Order Produce</a> </div>
+  </header>
+  
+  <main>
+    <section class="content-section">
+      <div class="container" style="text-align: center; padding: 5rem 1rem;"> 
+        <div class="section-heading">
+          <h1>Thank You!</h1>
+          <p class="lead" style="margin-top: 1rem; max-width: 500px;">Your inquiry has been successfully submitted. We appreciate you reaching out and will get back to you as soon as possible.</p>
+          <p style="margin-top: 2.5rem;">
+              <a href="/index.html" style="color: var(--brand); text-decoration: none; font-weight: 600; font-size: 1.1rem;">
+                &larr; <span style="text-decoration: underline;">Return to Homepage</span>
+              </a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <div class="footer-grid">
+          <div class="footer-col brand">
+              <h4>Sacred Earth Produce</h4>
+              <p>orders@sacredearthproduce.com</p>
+              <small class="desktop-only">© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+          </div>
+          <div class="footer-col">
+              <h4>Quick Links</h4>
+              <ul>
+                  <li><a href="/about.html">about</a></li>
+                  <li><a href="/how-it-works.html">how it works</a></li>
+                  <li><a href="/buyers.html">buyers</a></li> 
+                  <li><a href="/farmers.html">farmers</a></li>
+                  <li><a href="/contact.html">contact</a></li>
+              </ul>
+          </div>
+          <div class="footer-col">
+              <h4>Join Our List</h4>
+              <p>Get weekly availability updates and news from our growers.</p>
+              <form>
+                  <input type="email" placeholder="Email Address" required>
+                  <button type="submit">sign up</button>
+              </form>
+              <small>We respect your privacy.</small>
+          </div>
+      </div>
+      <div class="footer-bottom mobile-only">
+          <small>© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+      </div>
+  </footer>
+  <script>
+    // Mobile Navigation Toggle
+    const mBtn = document.querySelector('.mobile-nav-toggle');
+    const menu = document.querySelector('nav ul');
+    if (mBtn && menu) {
+      mBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = menu.classList.toggle('mobile-active');
+        mBtn.innerHTML = open ? '×' : '☰';
+        document.body.classList.toggle('no-scroll', open);
+      });
+      document.addEventListener('click', e => {
+        if (menu.classList.contains('mobile-active') && !menu.contains(e.target) && e.target !== mBtn) {
+          menu.classList.remove('mobile-active');
+          mBtn.innerHTML = '☰';
+          document.body.classList.remove('no-scroll');
+        }
+      });
+    }
+     console.log("Thank You Script Loaded"); 
+  </script>
+
+</body>
+</html>

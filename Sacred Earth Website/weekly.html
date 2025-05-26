@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Produce Availability | Sacred Earth Produce</title>
+    <meta name="description" content="View the current weekly wholesale produce availability list from Sacred Earth Produce. Fresh, sustainably-grown California produce.">
+
+    <link rel="preload" href="/logo.png" as="image" fetchpriority="high">
+    <link rel="preload" href="/grain.png" as="image" fetchpriority="low">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Domine:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        :root{
+            --brand:#3f6134;--brand-hover:#35512c;--secondary:#678d4d;
+            --accent:#c96a2f;--accent-hover:#a25428;--bg:#fbfcf9;
+            --bg-light:#f8faf6;--bg-lighter:#f7fbf5; 
+            --card:#ffffff;
+            --text:#1a231d;--text-light:#5a685f;--border-light:#dde5d9;
+            --white:#ffffff;
+            --t-smooth:cubic-bezier(.4,0,.2,1);
+            --t-bounce:cubic-bezier(.68,-0.55,.27,1.55);
+            --t-elastic: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,.04);
+            --shadow-md: 0 6px 15px rgba(0,0,0,.07);
+            --shadow-lg: 0 15px 40px rgba(0,0,0,.09);
+            --row-height-estimate: 60px; 
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Inter',sans-serif;
+            background: linear-gradient(175deg, var(--bg-lighter) 0%, var(--bg) 100%);
+            color:var(--text); font-size:16px;line-height:1.6;
+            -webkit-font-smoothing:antialiased; 
+            text-rendering: geometricPrecision;
+            margin:0; opacity:0;
+            animation:fadeInPage 1s var(--t-smooth) forwards;
+            overflow-x:hidden;
+        }
+        body.modal-open { 
+            overflow: hidden;
+        }
+        body::after { 
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: url('/grain.png'); opacity: 0.03; z-index: -10; pointer-events: none;
+        }
+        @keyframes fadeInPage { to { opacity: 1 } }
+        a { color: inherit; text-decoration: none; transition: color .3s var(--t-smooth) }
+        img, button { border: none; background: none; display: block; max-width: 100%; height: auto; }
+        h1,h2,h3{font-family:'Playfair Display',serif;margin:0}
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.7s var(--ease-out-cubic), transform 0.7s var(--ease-out-cubic);
+            will-change: transform, opacity;
+        }
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .desktop-only { display: inline-block }
+        .mobile-only { display: none }
+
+        /* --- HEADER --- */
+        header { background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.07); position: sticky; top: 0; z-index: 1000 }
+        .header-inner { max-width: 1400px; margin: 0 auto; padding: 1.55rem 2rem; display: flex; align-items: center; justify-content: center; position: relative; }
+        .logo-link { width: 180px; height: 90px; margin-right: 3.5rem; transition: transform .2s var(--t-bounce); }
+        .logo-link img { width: 100%; height: 100%; object-fit: contain; transition: transform .2s var(--t-bounce); }
+        .logo-link:hover img { transform: scale(1.05) }
+        .mobile-nav-toggle { display: none; position: absolute; left: 2rem; top: 50%; transform: translateY(-50%); font-size: 2rem; cursor: pointer; color: var(--text); background: none; border: none; }
+        nav ul { list-style: none; display: flex; gap: 2rem; padding: 0; }
+        nav a { position: relative; font-weight: 500; font-size: 1.25rem; text-transform: lowercase; padding: .32rem 0; transition: color .2s var(--t-smooth); color: var(--text); }
+        nav a::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px; background: var(--secondary); border-radius: 2px; transition: width .26s var(--t-smooth), left .26s var(--t-smooth), background-color .2s var(--t-smooth); }
+        nav a:hover {color: var(--brand);} 
+        nav a:hover::after, nav a.active::after { width: 100%; left: 0; background-color: var(--brand) }
+        nav a.active { color: var(--brand) }
+        .header-link-button { background: var(--brand); color: #fff; border-radius: 9px; font-family: Domine, serif; font-weight: 600; font-size: 1.05rem; padding: .9rem 2.4rem; margin-left: 5.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: inline-block; text-align: center; transition: background .18s var(--t-smooth), transform .18s var(--t-elastic), box-shadow .2s var(--t-smooth); }
+        .header-link-button:hover { 
+            background: var(--brand-hover); 
+            transform: scale(1.05) translateY(-2px); 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            color: #fff !important; 
+        }
+        @media (min-width: 701px) and (max-width: 950px) { .header-inner { padding: 1.55rem 3rem; justify-content: center; } .logo-link { margin-right: 1.6rem; width: 160px; height: 80px; flex-shrink: 0; } nav ul { gap: 1rem; } nav a { font-size: 1.1rem; white-space: nowrap; } .header-link-button { margin-left: 3.1rem; padding: .8rem 1.8rem; font-size: 1rem; flex-shrink: 0; } }
+        @media (max-width: 700px) { .header-inner { flex-direction: column; padding: 1rem } .logo-link { margin: 0.8rem auto 0.75rem; } .header-link-button { display: none } .mobile-nav-toggle { display: block } nav ul { display: flex; flex-direction: column; position: fixed; top: 0; left: 0; width: 80%; max-width: 280px; height: 100vh; background: #fdfdfb url('/grain.png') repeat; background-size: 80px; border-right: 4px solid var(--secondary); transform: translateX(-100%); visibility: hidden; opacity: 0; transition: transform .35s var(--t-smooth), opacity .3s var(--t-smooth), visibility 0s linear .35s; z-index: 101; gap: 0; padding: 3.5rem 0 1rem; } nav ul.mobile-active { display:flex; transform: translateX(0); opacity: 1; visibility: visible; transition-delay: 0s; } nav ul li { padding-left: 1.5rem; width: 100%; } nav ul li + li { margin-top: 2rem; } nav ul li a { font-size: 1.4rem; padding: .75rem 0; display: block; } nav a::after { display: none !important; } .mobile-only { display: block } .desktop-only { display: none } .mobile-only.mobile-cta-wrapper { margin-top: auto; position: sticky; bottom: 0; background: #fdfdfb; padding: 1rem 0; text-align: center; display: list-item !important; } .mobile-only.mobile-cta-wrapper a { display: inline-block; background: var(--brand); color: #fff; border-radius: 9px; padding: .75rem 0; width: calc(100% - 4rem); margin: 0 2rem; font-family: Domine, serif; font-size: 1.1rem; font-weight: 600; transition: background-color .18s var(--t-smooth); text-decoration: none !important; } .mobile-only.mobile-cta-wrapper a:hover { background: var(--brand-hover); color: #fff !important; } }
+
+        /* --- FOOTER --- */
+        .site-footer { background: #121212; color: #c9c9c9; padding: 3rem 1.5rem; margin-top: 6rem; border-top: 5px solid var(--brand);}
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 2.5rem 3rem; }
+        .footer-col { display: flex; flex-direction: column; transition: transform .3s var(--t-smooth); }
+        .footer-col:hover { transform: translateY(-5px) }
+        .footer-col.brand h4, .footer-col.brand p, .footer-col.brand small, .footer-col h4, .footer-col ul li a, .footer-col form, .footer-col small { color: #fff }
+        .footer-col.brand p { margin-bottom: .5rem; color: #a0a0a0; }
+        .footer-col.brand small { margin-top: auto; opacity: .7; padding-top: 1rem }
+        .footer-col h4 { font-family: Domine, serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1; padding: 0; }
+        .footer-col ul li a { font-size: .95rem; text-transform: lowercase; transition: color .2s var(--t-smooth), padding-left .2s var(--t-smooth); }
+        .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px }
+        .footer-col form { display: flex; gap: .65rem; margin: .9rem 0 }
+        .footer-col input[type=email] { flex: 1; padding: .6rem .75rem; border: none; border-radius: 4px; font-size: .95rem; background-color: #fff; color: var(--text); }
+        .footer-col input[type=email]::placeholder { color: var(--text-light) }
+        .footer-col button { padding: .62rem 1.15rem; border: none; border-radius: 4px; background: var(--brand); color: #fff; font-family: Domine, serif; font-weight: 600; font-size: .95rem; text-transform: lowercase; cursor: pointer; transition: background .18s var(--t-smooth), transform .18s var(--t-smooth); display: inline-block; }
+        .footer-col button:hover { background: var(--brand-hover); transform: scale(1.03) }
+        .footer-col small { color: #888; }
+        .footer-bottom.mobile-only { display: none }
+        @media (max-width: 700px) { .footer-col.brand small { display: none } .footer-grid { align-items: start } .footer-grid > .footer-col:nth-child(2) > ul { flex-grow: 0 } .footer-bottom.mobile-only { margin-top:1.5rem; color:#fff; opacity:.7; text-align: center; display: block; } }
+
+        /* --- Main Content (Weekly Page Specific) --- */
+        .sheet{max-width:1400px;margin:0 auto;padding:3rem 1.5rem 5rem}
+        .hero{text-align:center;margin-bottom:1.5rem;padding:3.5rem 0 2rem;position:relative; overflow: hidden;}
+        .hero h1{font-size:clamp(2.8rem,6vw,4rem);color:var(--brand);margin-bottom:0.75rem;line-height:1.1;font-weight:700;}
+        .hero h2{font-size:clamp(1.2rem,3vw,1.6rem);font-weight:500;color:var(--text-light);margin-top:0.25rem;}
+        
+        .hero p { 
+            max-width: 50rem; 
+            color: var(--text); 
+            font-size: 1.05rem; 
+            line-height: 1.6;
+            margin: 1.5rem auto 0;
+            background: var(--card);
+            padding: 1.5rem 2rem; 
+            border-radius: 16px;  
+            box-shadow: var(--shadow-md); 
+            border: 1px solid var(--border-light);
+            text-align: center;
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .hero p:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,.1); 
+        }
+
+        .hero p strong {
+            font-weight: 500; 
+            display: block; 
+            margin-bottom: 0.4rem; 
+        }
+        .hero p strong a {
+            color: var(--brand); 
+            font-weight: 600;     
+            text-decoration: none;
+        }
+        .hero p strong a:hover {
+            text-decoration: underline;
+            color: var(--brand-hover); 
+        }
+        .hero p small {
+            font-size: 0.85rem; 
+            color: var(--text-light);
+            display: inline-block; 
+        }
+        .hero #date-span{
+            font-weight:700;
+            color: var(--secondary); 
+            font-family:'Domine',serif;
+        }
+        
+        .cta-button { 
+            display: inline-block;
+            background: var(--brand); 
+            color: #fff !important; 
+            border-radius: 9px;
+            font-family: 'Domine', serif;
+            font-size: 1rem;
+            padding: .85rem 2rem; 
+            box-shadow: var(--shadow-sm);
+            transition: all .2s ease;
+            margin-top: 1.75rem; 
+            margin-bottom: 0.5rem; 
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            background: var(--brand-hover); 
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: #fff !important;
+        }
+
+
+        /* --- Sticky Filter Bar --- */
+        .sticky-filters{
+            position:sticky;
+            background:rgba(247,251,245,.85);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            padding-top: 0.5rem;     
+            padding-bottom: 0.75rem; 
+            z-index:900;
+            border-bottom:1px solid transparent;
+            margin-bottom: 2.5rem; 
+            transition:all .4s ease;
+        }
+        body.scrolled .sticky-filters{box-shadow:var(--shadow-lg); border-color: var(--border-light);}
+        .filter-controls { display: flex; gap: 1.5rem; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; } 
+        
+        .search-bar {
+            position: relative;
+            flex-grow: 0;
+            flex-shrink: 0;
+            width: 220px;
+            transition: width 0.4s var(--t-smooth);
+        }
+        .search-bar:focus-within {
+            width: 350px;
+        }
+        .search-bar input {
+            width: 100%; padding: .8rem 1.5rem .8rem 3rem; border-radius: 100px; border: 1px solid var(--border-light);
+            font-size: 1rem; background: var(--white); box-shadow: var(--shadow-sm); transition: all .3s ease;
+        }
+        .search-bar input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(103, 141, 77, 0.4); }
+        .search-bar svg { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--text-light); transition: color .3s ease; pointer-events: none; }
+        .search-bar input:focus + svg { color: var(--brand); }
+
+        .filters-wrapper { 
+            flex-grow: 1;
+            position: relative;
+            min-width: 0; 
+            overflow: hidden; 
+        }
+        .filters-wrapper::before,
+        .filters-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 35px; 
+            pointer-events: none; 
+            z-index: 2; 
+            opacity: 0; 
+            transition: opacity 0.2s var(--t-smooth);
+        }
+        .filters-wrapper.show-left-fade::before { opacity: 1; }
+        .filters-wrapper.show-right-fade::after { opacity: 1; }
+        .filters-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-lighter) 10%, rgba(247,251,245,0) 90%);
+        }
+        .filters-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-lighter) 10%, rgba(247,251,245,0) 90%);
+        }
+
+        .filters{ 
+            display:flex;
+            gap:.75rem; 
+            overflow-x:auto;
+            padding: .75rem 0; 
+            scrollbar-width:none;
+            -ms-overflow-style:none;
+            justify-content: flex-start;
+        }
+        .filters::-webkit-scrollbar{display:none}
+
+        .btn-filter{
+            border:1px solid var(--border-light);
+            border-radius:100px;
+            padding:.7rem 1.5rem;
+            cursor:pointer;
+            background:var(--white);
+            color:var(--text);
+            transition:all .3s var(--t-bounce);
+            box-shadow:var(--shadow-sm);
+            display:flex;
+            align-items:center;
+            gap:.6rem;
+            white-space:nowrap; 
+            font-weight: 500;
+            flex-shrink: 0; 
+        }
+        .btn-filter:first-child {
+            margin-left: 10px; 
+        }
+        .btn-filter:last-child {
+            margin-right: 10px; 
+        }
+
+        .btn-filter svg { width: 18px; height: 18px; color: var(--text-light); transition: all .3s ease; }
+        .btn-filter:not(.has-icon) { gap: 0; }
+        .btn-filter:hover{border-color:var(--secondary);transform:translateY(-3px) scale(1.05);box-shadow:var(--shadow-md)}
+        .btn-filter.has-icon:hover svg { color: var(--brand); transform: rotate(-5deg) scale(1.1); }
+        
+        .btn-filter.active{
+            background:var(--brand);
+            border-color:var(--brand-hover);
+            color:var(--white);
+            box-shadow: 0 4px 12px rgba(63, 97, 52, 0.22); 
+            transform:translateY(-1px) scale(1.01);
+        }
+        .btn-filter.active.has-icon svg { color: var(--white); transform: scale(1.05); }
+
+        /* --- Table --- */
+        .table-wrap{background:var(--card);border-radius:28px;box-shadow:var(--shadow-lg);border:1px solid var(--border-light);overflow:hidden; transition: box-shadow .4s ease; }
+        .table-wrap:hover { box-shadow: 0 25px 65px rgba(0,0,0,.14); }
+        .table-scroll{overflow-x:auto} 
+        table{
+            border-collapse:collapse;
+            width:100%;
+            table-layout: fixed; 
+        } 
+        
+        thead th{
+            text-transform: uppercase;
+            font-size: .9rem;
+            font-weight: 700;
+            text-align: left; 
+            color: var(--brand);
+            background: var(--bg-light);
+            border-bottom: 2px solid var(--border-light);
+            padding: 1.5rem 1rem; 
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            cursor: pointer;
+            transition: background-color .2s ease, color .2s ease;
+        }
+        #produceTable thead th:nth-child(1) { display: none; } 
+        #produceTable thead th:nth-child(2) { width: 30%; min-width: 200px; } 
+        #produceTable thead th:nth-child(3) { width: 18%; min-width: 110px; } 
+        #produceTable thead th:nth-child(4) { width: 12%; min-width: 80px;  } 
+        #produceTable thead th:nth-child(5) { width: 25%; min-width: 150px; } 
+        #produceTable thead th:nth-child(6) { width: 15%; min-width: 100px; text-align: center; }
+
+
+        thead th:hover { background-color: #e6f0ea; color: var(--brand-hover); }
+        thead th .sort-indicator { display: inline-block; width: 1em; text-align: left; opacity: 0.5; transition: opacity .2s ease, transform .3s ease; }
+        thead th.sorted .sort-indicator { opacity: 1; }
+        thead th.asc .sort-indicator { transform: translateY(-2px); }
+        thead th.desc .sort-indicator { transform: translateY(2px); }
+
+        tbody tr {
+            opacity: 1;
+            transition: opacity .3s var(--ease-out-quint), 
+                        background .3s var(--t-smooth),
+                        box-shadow .3s var(--t-smooth);
+            will-change: opacity;
+            content-visibility: auto;
+            contain-intrinsic-size: var(--row-height-estimate);
+        }
+        tbody tr.hidden {
+            opacity: 0;
+            pointer-events: none;
+            content-visibility: hidden; 
+        }
+        tbody tr.hidden td {
+            height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            border-bottom: none !important;
+            overflow: hidden;
+            transition: height 0s .3s, padding 0s .3s, border-bottom 0s .3s;
+        }
+        tbody tr:nth-child(even){background:var(--bg-lighter)}
+        tbody tr:hover{
+            background:var(--white);
+            box-shadow: inset 4px 0 0 0 var(--secondary), 0 8px 25px rgba(0,0,0,.08);
+            position:relative;
+            z-index:5;
+        }
+        td{
+            padding:1.3rem 1rem; 
+            border-bottom:1px solid var(--border-light);
+            font-size:1rem;
+            color:var(--text-light);
+            vertical-align:middle; 
+            transition: color .2s ease, padding .3s ease; 
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        #produceTable tbody td:nth-child(1) { display: none; }
+        td.actions-cell {
+            text-align: center;
+            vertical-align: middle;
+        }
+        td:nth-child(2){font-weight:600;color:var(--text)} 
+        td:nth-child(4){font-weight:700;color:var(--brand);font-family:'Domine',serif;font-size:1.05rem; text-align: right;}
+
+        /* Action cell buttons */
+        .add-to-order-btn,
+        .quantity-control-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            line-height: 26px; 
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+            margin: 0 2px; 
+            padding:0;
+        }
+        .add-to-order-btn:hover,
+        .quantity-control-btn:hover {
+            background-color: var(--brand);
+        }
+        .add-to-order-btn:active,
+        .quantity-control-btn:active {
+            transform: scale(0.92);
+        }
+        .quantity-display {
+            display: inline-block;
+            min-width: 24px; 
+            text-align: center;
+            font-weight: 500;
+            padding: 0 4px;
+            vertical-align: middle; 
+            font-size: 0.9rem;
+        }
+        .quantity-controls { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: 3px; 
+        }
+
+
+        /* Mobile Table View & Filters */
+        @media(max-width:768px){
+            .filter-controls { flex-direction: column; padding: 0 .75rem; gap: 1rem; }
+            .search-bar { width: 100%; max-width: 100%; }
+            .search-bar:focus-within { width: 100%; }
+            .filters-wrapper { 
+                width: 100%;
+            }
+            .filters { 
+                width: 100%; 
+                padding: .75rem 0; 
+                justify-content: flex-start; 
+            }
+            .filters::before, .filters::after {
+                width: 25px; 
+                background: linear-gradient(to right, var(--bg-lighter) 0%, rgba(247,251,245,0) 100%);
+            }
+            .filters::after {
+                 background: linear-gradient(to left, var(--bg-lighter) 0%, rgba(247,251,245,0) 100%);
+            }
+            .btn-filter:first-child { margin-left: 5px; }
+            .btn-filter:last-child { margin-right: 5px; }
+
+
+            .sheet{padding:1.5rem .75rem}
+            .hero h1 { font-size: 2.1rem; margin-bottom: 0.5rem;} 
+            .hero h2 { font-size: 1rem; margin-top: 0.15rem;} 
+            .hero p { padding: 1.25rem; font-size: 0.95rem; margin-top: 1.25rem; }
+            .hero .cta-button { 
+                font-size: 0.9rem; 
+                padding: .7rem 1.6rem; 
+                margin-top: 1.25rem; 
+                margin-bottom: .25rem; 
+            }
+             .sticky-filters {
+                padding-top: 0.25rem; 
+                padding-bottom: 0.5rem; 
+                margin-bottom: 2rem; 
+            }
+
+            .table-wrap { 
+                background: var(--card); 
+                border: 1px solid var(--border-light); 
+                border-radius: 16px; 
+                box-shadow: var(--shadow-sm); 
+                overflow: hidden; 
+            }
+            .table-scroll{overflow-x:auto;}
+            table{min-width: 480px;} 
+
+            thead th {
+                padding: 0.8rem 0.6rem; 
+                font-size: .7rem;   
+                white-space: normal; 
+                line-height: 1.3;
+            }
+            #produceTable thead th:nth-child(1) { display: none; }
+            #produceTable thead th:nth-child(2) { 
+                padding-left: .8rem; 
+                width: 25%; min-width: 70px; 
+            } 
+            #produceTable thead th:nth-child(3) { width: 18%; min-width: 55px; }  
+            #produceTable thead th:nth-child(4) { width: 15%; min-width: 50px; text-align: right; }  
+            #produceTable thead th:nth-child(5) { 
+                padding-right: .8rem; 
+                width: 27%; min-width: 75px; 
+            }  
+            #produceTable thead th:nth-child(6) { width: 15%; min-width: 80px; } 
+
+
+            td{
+                padding: 0.6rem 0.4rem; 
+                font-size: .8rem;    
+                white-space: normal; 
+                line-height: 1.35;
+                vertical-align: top;
+            }
+            #produceTable tbody td:nth-child(1) { display: none; }
+            #produceTable tbody td:nth-child(2) { 
+                padding-left: 0.6rem; 
+            }
+             #produceTable tbody td:nth-child(5) { 
+                padding-right: 0.6rem; 
+            }
+            #produceTable td:nth-child(4) { 
+                font-size: .75rem; 
+            }
+            #produceTable td.actions-cell {
+                padding: 0.6rem 0.2rem;
+            }
+            
+            :root { 
+                --row-height-estimate: 42px; 
+            }
+            tbody tr {
+                contain-intrinsic-size: var(--row-height-estimate);
+            }
+            tbody tr:hover{
+                 box-shadow: inset 2px 0 0 0 var(--secondary), 0 1px 5px rgba(0,0,0,.05); 
+            }
+             .add-to-order-btn {
+                width: 26px; 
+                height: 26px;
+                font-size: 1.1rem;
+                line-height: 24px;
+            }
+            .quantity-control-btn {
+                width: 22px;
+                height: 22px;
+                font-size: 0.9rem; 
+                line-height: 20px;
+                margin: 0 1px; 
+            }
+            .quantity-display {
+                min-width: 20px; 
+                font-size: 0.85rem;
+                padding: 0 3px;
+            }
+            .quantity-controls {
+                gap: 2px; 
+            }
+        }
+
+        /* No Results */
+        #no-results{display:none;text-align:center;padding:5rem 1rem;color:var(--text); background: var(--white); border-radius: 20px; margin-top: 2rem; border: 1px dashed var(--border-light); transition: opacity .5s ease; opacity: 0;}
+        #no-results.show { display: block; opacity: 1; }
+        #no-results svg { margin: 0 auto 1rem; height: 4rem; width: 4rem; color: var(--secondary); opacity: 0.7; transform: rotate(-15deg); transition: transform 1s var(--t-bounce); }
+        #no-results.show svg { transform: rotate(0deg); }
+        #no-results h3 { font-size: 1.8rem; color: var(--brand); margin-bottom: .5rem;}
+
+        /* Floating Cart Button Styles */
+        #viewOrderBtn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--brand);
+            color: white;
+            border:none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            box-shadow: var(--shadow-lg);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1002; 
+            transition: transform 0.2s var(--t-bounce), background-color 0.2s ease;
+        }
+        #viewOrderBtn:hover {
+            transform: scale(1.1);
+            background-color: var(--brand-hover);
+        }
+        #viewOrderBtn svg {
+            width: 26px;
+            height: 26px;
+            fill: currentColor;
+        }
+        #orderItemCountBadge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: var(--accent); 
+            color: white;
+            border-radius: 50%;
+            min-width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            padding: 0 3px;
+            border: 2px solid var(--white); 
+        }
+
+        /* Order Summary Modal */
+        #orderSummaryModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 2000;
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s var(--t-smooth), visibility 0s linear 0.3s;
+        }
+        #orderSummaryModal.visible {
+            display:flex; 
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0s;
+        }
+        .order-summary-content {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+        .order-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 15px;
+        }
+        .order-summary-header h2 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: var(--brand);
+            font-size: 1.8rem;
+        }
+        #closeOrderModalBtn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            line-height: 1;
+            padding: 0;
+        }
+        #orderSummaryList {
+            margin-bottom: 20px;
+            overflow-y: auto; 
+            flex-grow: 1; 
+        }
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--bg-light);
+        }
+        .order-summary-item:last-child {
+            border-bottom: none;
+        }
+        .order-summary-item .item-details {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+        .order-summary-item .item-name {
+            font-weight: 600;
+            display: block;
+            font-size: 0.95rem;
+        }
+        .order-summary-item .item-pack,
+        .order-summary-item .item-price-line {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        .order-summary-item .item-actions {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        .order-summary-item .item-actions .remove-item-btn {
+            color: var(--accent);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 0 5px;
+        }
+        .order-summary-item .item-actions .quantity-display { font-size: 0.9rem; }
+
+
+        .order-summary-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text);
+            text-align: left;
+        }
+        .order-summary-form input[type="text"],
+        .order-summary-form input[type="email"],
+        .order-summary-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+        .order-summary-form textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+        .order-summary-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .order-summary-buttons button {
+            padding: 12px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+        #clearOrderBtn { background-color: var(--text-light); color:white; flex-basis: 30%;}
+        #clearOrderBtn:hover { background-color: #888; }
+        #submitOrderRequestBtn { background-color: var(--brand); color:white; font-weight: bold; flex-basis: 70%; }
+        #submitOrderRequestBtn:hover { background-color: var(--brand-hover); }
+
+        .empty-order-message {
+            text-align: center;
+            color: var(--text-light);
+            padding: 20px 0;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="icon-all" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21l-6-6m2-5a7 7 0 1 1-14 0a7 7 0 0 1 14 0z"/></symbol>
+  </defs>
+</svg>
+
+<header>
+    <div class="header-inner">
+        <button class="mobile-nav-toggle mobile-only" aria-label="Menu">☰</button>
+        <a href="/index.html" class="logo-link"><img src="/logo.png" alt="Sacred Earth Produce Logo"></a>
+        <nav>
+            <ul>
+                <li><a href="/about.html">about</a></li>
+                <li><a href="/how-it-works.html">how it works</a></li>
+                <li><a href="/buyers.html">buyers</a></li>
+                <li><a href="/farmers.html">farmers</a></li>
+                <li><a href="/contact.html">contact</a></li>
+                <li class="mobile-only mobile-cta-wrapper">
+                    <a href="/buyers.html">Order Produce</a> </li>
+            </ul>
+        </nav>
+        <a href="/buyers.html" class="header-link-button desktop-only">Order Produce</a> </div>
+</header>
+
+
+<div class="sheet">
+    <div class="hero">
+        <h1>Weekly Availability</h1>
+        <h2>Updated <span id="date-span">May 20, 2025</span></h2>
+        <p>
+            <strong>To place an order, email: <a href="mailto:orders@sacredearthproduce.com">orders@sacredearthproduce.com</a></strong><br>
+            <small>All produce is certified organic unless noted.</small>
+        </p>
+        <button id="downloadPdfBtn" class="cta-button">Download Price List (PDF)</button>
+    </div>
+
+    <div class="sticky-filters" id="sticky-bar">
+        <div class="filter-controls">
+            <div class="search-bar">
+                <input type="search" id="searchInput" placeholder="Search items...">
+                <svg><use href="#icon-search"></use></svg>
+            </div>
+            <div class="filters-wrapper">
+                <div class="filters" id="filterBar">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrap animate-on-scroll">
+        <div class="table-scroll">
+            <table id="produceTable">
+                <thead>
+                    <tr>
+                        <th data-col="cat">Category <span class="sort-indicator"></span></th>
+                        <th data-col="item">Item <span class="sort-indicator"></span></th>
+                        <th>Pack</th>
+                        <th>Price</th>
+                        <th>Notes</th>
+                        <th>Order</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-item-id="avocado_hass_40_48" data-item-name="Hass Avocado" data-pack="40/48ct" data-price="118.00" data-cat="AVOCADOS"><td data-label="Category">AVOCADOS</td><td data-label="Item">Hass Avocado</td><td data-label="Pack">40/48ct</td><td data-label="Price">$118.00</td><td data-label="Notes">CA (add 2.50 for preconditioning)</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="avocado_hass_60" data-item-name="Hass Avocado" data-pack="60ct" data-price="93.00" data-cat="AVOCADOS"><td data-label="Category">AVOCADOS</td><td data-label="Item">Hass Avocado</td><td data-label="Pack">60ct</td><td data-label="Price">$93.00</td><td data-label="Notes">CA (add 2.50 for preconditioning)</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="avocado_hass_70" data-item-name="Hass Avocado" data-pack="70ct" data-price="77.00" data-cat="AVOCADOS"><td data-label="Category">AVOCADOS</td><td data-label="Item">Hass Avocado</td><td data-label="Pack">70ct</td><td data-label="Price">$77.00</td><td data-label="Notes">CA (add 2.50 for preconditioning)</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="avocado_hass_84" data-item-name="Hass Avocado" data-pack="84ct" data-price="45.00" data-cat="AVOCADOS"><td data-label="Category">AVOCADOS</td><td data-label="Item">Hass Avocado</td><td data-label="Pack">84ct</td><td data-label="Price">$45.00</td><td data-label="Notes">CA (add 2.50 for preconditioning)</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="avocado_fuerte_48_60" data-item-name="Fuerte Avocado" data-pack="48/60ct" data-price="81.00" data-cat="AVOCADOS"><td data-label="Category">AVOCADOS</td><td data-label="Item">Fuerte Avocado</td><td data-label="Pack">48/60ct</td><td data-label="Price">$81.00</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    
+                    <tr data-item-id="citrus_lemons_fancy_115_140" data-item-name="Eureka Lemons, Fancy" data-pack="115/140ct" data-price="59.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Eureka Lemons, Fancy</td><td data-label="Pack">115/140ct</td><td data-label="Price">$59.50</td><td data-label="Notes">CA, Stehly Farms</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_lemons_choice_115_140" data-item-name="Eureka Lemons, Choice" data-pack="115/140ct" data-price="52.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Eureka Lemons, Choice</td><td data-label="Pack">115/140ct</td><td data-label="Price">$52.50</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_goldnugget_25" data-item-name="Gold Nugget Tangerines" data-pack="25# Jumbo" data-price="39.95" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Gold Nugget Tangerines</td><td data-label="Pack">25# Jumbo</td><td data-label="Price">$39.95</td><td data-label="Notes">CA, Ellis Farms BIODYNAMIC</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_grapefruit_star_ruby_multi" data-item-name="Grapefruit, Star Ruby" data-pack="27/32/36/40ct" data-price="49.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Grapefruit, Star Ruby</td><td data-label="Pack">27/32/36/40ct</td><td data-label="Price">$49.50</td><td data-label="Notes">CA, Rainbow Valley Orchards</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_grapefruit_star_ruby_40_48" data-item-name="Grapefruit, Star Ruby" data-pack="40/48ct" data-price="46.00" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Grapefruit, Star Ruby</td><td data-label="Pack">40/48ct</td><td data-label="Price">$46.00</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_limes_green_38" data-item-name="Limes, Green" data-pack="38#" data-price="85.00" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Limes, Green</td><td data-label="Pack">38#</td><td data-label="Price">$85.00</td><td data-label="Notes">MEX, Covilli</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_meyerlemons_24" data-item-name="Meyer Lemons" data-pack="24#" data-price="57.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Meyer Lemons</td><td data-label="Pack">24#</td><td data-label="Price">$57.50</td><td data-label="Notes">CA, Boyer Ranch</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_moroblood_25" data-item-name="Morro Blood Oranges" data-pack="25# Jumbo/Large" data-price="42.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Morro Blood Oranges</td><td data-label="Pack">25# Jumbo/Large</td><td data-label="Price">$42.50</td><td data-label="Notes">CA, Stehly Farms</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_navel_fancy_56_72" data-item-name="Navel Oranges, Fancy" data-pack="56/72ct" data-price="57.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Navel Oranges, Fancy</td><td data-label="Pack">56/72ct</td><td data-label="Price">$57.50</td><td data-label="Notes">CA, Nicholas Farms</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_navel_fancy_88" data-item-name="Navel Oranges, Fancy" data-pack="88ct" data-price="54.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Navel Oranges, Fancy</td><td data-label="Pack">88ct</td><td data-label="Price">$54.50</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_pixie_25" data-item-name="Pixie Tangerines" data-pack="25# Jumbo" data-price="59.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Pixie Tangerines</td><td data-label="Pack">25# Jumbo</td><td data-label="Price">$59.50</td><td data-label="Notes">CA, Rainbow Ranch BIODYNAMIC</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_tango_25" data-item-name="Tango Mandarins" data-pack="25# Jumbo" data-price="39.95" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Tango Mandarins</td><td data-label="Pack">25# Jumbo</td><td data-label="Price">$39.95</td><td data-label="Notes">CA, Ellis Farms BIODYNAMIC</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_valencia_fancy_72_88" data-item-name="Valencia Oranges, Fancy" data-pack="72/88ct" data-price="48.75" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Valencia Oranges, Fancy</td><td data-label="Pack">72/88ct</td><td data-label="Price">$48.75</td><td data-label="Notes">CA, Rainbow Valley Orchards</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_valencia_fancy_combo" data-item-name="Valencia Oranges, Fancy" data-pack="88/113ct combo pack" data-price="39.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Valencia Oranges, Fancy</td><td data-label="Pack">88/113ct combo pack</td><td data-label="Price">$39.50</td><td data-label="Notes">CA, Totem Ranch BIODYNAMIC</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="citrus_valencia_choice_88" data-item-name="Valencia Oranges, Choice" data-pack="88ct" data-price="37.50" data-cat="CITRUS"><td data-label="Category">CITRUS</td><td data-label="Item">Valencia Oranges, Choice</td><td data-label="Pack">88ct</td><td data-label="Price">$37.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+
+                    <tr data-item-id="apples_pears_fuji_88" data-item-name="Apples, Fuji" data-pack="88ct" data-price="64.75" data-cat="APPLES & PEARS"><td data-label="Category">APPLES & PEARS</td><td data-label="Item">Apples, Fuji</td><td data-label="Pack">88ct</td><td data-label="Price">$64.75</td><td data-label="Notes">WA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="apples_pears_grannysmith_88" data-item-name="Apples, Granny Smith" data-pack="88ct" data-price="69.50" data-cat="APPLES & PEARS"><td data-label="Category">APPLES & PEARS</td><td data-label="Item">Apples, Granny Smith</td><td data-label="Pack">88ct</td><td data-label="Price">$69.50</td><td data-label="Notes">WA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="apples_pears_pinklady_88_100" data-item-name="Apples, Pink Lady" data-pack="88/100ct" data-price="56.75" data-cat="APPLES & PEARS"><td data-label="Category">APPLES & PEARS</td><td data-label="Item">Apples, Pink Lady</td><td data-label="Pack">88/100ct</td><td data-label="Price">$56.75</td><td data-label="Notes">WA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="apples_pears_bartlett_70" data-item-name="Pears, Bartlett" data-pack="70ct" data-price="52.50" data-cat="APPLES & PEARS"><td data-label="Category">APPLES & PEARS</td><td data-label="Item">Pears, Bartlett</td><td data-label="Pack">70ct</td><td data-label="Price">$52.50</td><td data-label="Notes">ARG</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="apples_pears_bosc_90" data-item-name="Pears, Bosc" data-pack="90ct" data-price="69.50" data-cat="APPLES & PEARS"><td data-label="Category">APPLES & PEARS</td><td data-label="Item">Pears, Bosc</td><td data-label="Pack">90ct</td><td data-label="Price">$69.50</td><td data-label="Notes">ARG</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="apples_pears_danjou_90" data-item-name="Pears, D'Anjou" data-pack="90ct" data-price="45.00" data-cat="APPLES & PEARS"><td data-label="Category">APPLES & PEARS</td><td data-label="Item">Pears, D'Anjou</td><td data-label="Pack">90ct</td><td data-label="Price">$45.00</td><td data-label="Notes">ARG</td><td class="actions-cell"></td></tr>
+                    
+                    <tr data-item-id="berries_cherries_blueberries_12x6" data-item-name="Blueberries" data-pack="12x6oz." data-price="44.00" data-cat="BERRIES & CHERRIES"><td data-label="Category">BERRIES & CHERRIES</td><td data-label="Item">Blueberries</td><td data-label="Pack">12x6oz.</td><td data-label="Price">$44.00</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="berries_cherries_cherries_12x133" data-item-name="Cherries, Red" data-pack="12x1.33lbs." data-price="89.95" data-cat="BERRIES & CHERRIES"><td data-label="Category">BERRIES & CHERRIES</td><td data-label="Item">Cherries, Red</td><td data-label="Pack">12x1.33lbs.</td><td data-label="Price">$89.95</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+
+                    <tr data-item-id="roots_aromatics_beets_25" data-item-name="Beets, Red" data-pack="25#" data-price="45.00" data-cat="ROOTS & AROMATICS"><td data-label="Category">ROOTS & AROMATICS</td><td data-label="Item">Beets, Red</td><td data-label="Pack">25#</td><td data-label="Price">$45.00</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="roots_aromatics_burdock_10" data-item-name="Burdock Root" data-pack="10#" data-price="57.50" data-cat="ROOTS & AROMATICS"><td data-label="Category">ROOTS & AROMATICS</td><td data-label="Item">Burdock Root</td><td data-label="Pack">10#</td><td data-label="Price">$57.50</td><td data-label="Notes">USA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="roots_aromatics_garlic_30" data-item-name="Garlic, White" data-pack="30# Jumbo" data-price="169.50" data-cat="ROOTS & AROMATICS"><td data-label="Category">ROOTS & AROMATICS</td><td data-label="Item">Garlic, White</td><td data-label="Pack">30# Jumbo</td><td data-label="Price">$169.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="roots_aromatics_ginger_30" data-item-name="Ginger, Yellow" data-pack="30#" data-price="97.50" data-cat="ROOTS & AROMATICS"><td data-label="Category">ROOTS & AROMATICS</td><td data-label="Item">Ginger, Yellow</td><td data-label="Pack">30#</td><td data-label="Price">$97.50</td><td data-label="Notes">PERU, FAIR TRADE</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="roots_aromatics_jicama_20" data-item-name="Jicama" data-pack="20#" data-price="37.50" data-cat="ROOTS & AROMATICS"><td data-label="Category">ROOTS & AROMATICS</td><td data-label="Item">Jicama</td><td data-label="Pack">20#</td><td data-label="Price">$37.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="roots_aromatics_turmeric_30" data-item-name="Turmeric" data-pack="30#" data-price="149.50" data-cat="ROOTS & AROMATICS"><td data-label="Category">ROOTS & AROMATICS</td><td data-label="Item">Turmeric</td><td data-label="Pack">30#</td><td data-label="Price">$149.50</td><td data-label="Notes">FIJI</td><td class="actions-cell"></td></tr>
+
+                    <tr data-item-id="greens_cabbage_45" data-item-name="Cabbage, Green" data-pack="45#" data-price="46.75" data-cat="GREENS & OTHER VEGETABLES"><td data-label="Category">GREENS & OTHER VEGETABLES</td><td data-label="Item">Cabbage, Green</td><td data-label="Pack">45#</td><td data-label="Price">$46.75</td><td data-label="Notes">USA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="greens_cucumbers_36_42" data-item-name="Cucumbers" data-pack="36/42ct" data-price="32.50" data-cat="GREENS & OTHER VEGETABLES"><td data-label="Category">GREENS & OTHER VEGETABLES</td><td data-label="Item">Cucumbers</td><td data-label="Pack">36/42ct</td><td data-label="Price">$32.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                    
+                    <tr data-item-id="peppers_anaheim_10" data-item-name="Peppers, Anaheim" data-pack="10#" data-price="37.50" data-cat="PEPPERS"><td data-label="Category">PEPPERS</td><td data-label="Item">Peppers, Anaheim</td><td data-label="Pack">10#</td><td data-label="Price">$37.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="peppers_jalapeno_10" data-item-name="Peppers, Jalapeno" data-pack="10#" data-price="37.50" data-cat="PEPPERS"><td data-label="Category">PEPPERS</td><td data-label="Item">Peppers, Jalapeno</td><td data-label="Pack">10#</td><td data-label="Price">$37.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+
+                    <tr data-item-id="squash_acorn_35" data-item-name="Squash, Acorn" data-pack="35#" data-price="39.75" data-cat="SQUASH"><td data-label="Category">SQUASH</td><td data-label="Item">Squash, Acorn</td><td data-label="Pack">35#</td><td data-label="Price">$39.75</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="squash_honeynut_35" data-item-name="Squash, Honeynut" data-pack="35#" data-price="37.50" data-cat="SQUASH"><td data-label="Category">SQUASH</td><td data-label="Item">Squash, Honeynut</td><td data-label="Pack">35#</td><td data-label="Price">$37.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="squash_zucchini_22" data-item-name="Zucchini" data-pack="22# Fancy" data-price="29.50" data-cat="SQUASH"><td data-label="Category">SQUASH</td><td data-label="Item">Zucchini</td><td data-label="Pack">22# Fancy</td><td data-label="Price">$29.50</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+
+                    <tr data-item-id="tropical_cherimoya_10" data-item-name="Cherimoya" data-pack="10#" data-price="ASK" data-cat="TROPICAL & SPECIALTY FRUIT"><td data-label="Category">TROPICAL & SPECIALTY FRUIT</td><td data-label="Item">Cherimoya</td><td data-label="Pack">10#</td><td data-label="Price">ASK</td><td data-label="Notes">CA, PESTICIDE FREE</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="tropical_coconuts_9ct" data-item-name="Coconuts, Thai" data-pack="9ct" data-price="49.50" data-cat="TROPICAL & SPECIALTY FRUIT"><td data-label="Category">TROPICAL & SPECIALTY FRUIT</td><td data-label="Item">Coconuts, Thai</td><td data-label="Pack">9ct</td><td data-label="Price">$49.50</td><td data-label="Notes">THAI</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="tropical_dates_barhi_12x12" data-item-name="Dates, Barhi" data-pack="12x12oz. cups" data-price="65.00" data-cat="TROPICAL & SPECIALTY FRUIT"><td data-label="Category">TROPICAL & SPECIALTY FRUIT</td><td data-label="Item">Dates, Barhi</td><td data-label="Pack">12x12oz. cups</td><td data-label="Price">$65.00</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="tropical_dates_medjool_11lb" data-item-name="Dates, Medjool" data-pack="11#" data-price="62.50" data-cat="TROPICAL & SPECIALTY FRUIT"><td data-label="Category">TROPICAL & SPECIALTY FRUIT</td><td data-label="Item">Dates, Medjool</td><td data-label="Pack">11#</td><td data-label="Price">$62.50</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="tropical_dates_medjool_12x12" data-item-name="Dates, Medjool" data-pack="12x12oz. cups" data-price="62.50" data-cat="TROPICAL & SPECIALTY FRUIT"><td data-label="Category">TROPICAL & SPECIALTY FRUIT</td><td data-label="Item">Dates, Medjool</td><td data-label="Pack">12x12oz. cups</td><td data-label="Price">$62.50</td><td data-label="Notes">CA</td><td class="actions-cell"></td></tr>
+                    <tr data-item-id="tropical_pineapples_6_7ct" data-item-name="Pineapples" data-pack="6/7ct" data-price="32.00" data-cat="TROPICAL & SPECIALTY FRUIT"><td data-label="Category">TROPICAL & SPECIALTY FRUIT</td><td data-label="Item">Pineapples</td><td data-label="Pack">6/7ct</td><td data-label="Price">$32.00</td><td data-label="Notes">MEX</td><td class="actions-cell"></td></tr>
+                </tbody>
+            </table>
+            <div id="no-results">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10l-2 2m0-4l2-2" /></svg>
+                <h3>No items found</h3>
+                <p>Try searching or selecting another category.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="viewOrderBtn" aria-label="View Order Request">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+        <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.744-.615l2.25-6.5a.75.75 0 00-.744-.885H6.328L5.479 3H2.25zM5.06 12.75l-1.28-4.8H19.25l-1.625 4.8H5.059zM6 18a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm10.5 1.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+    </svg>
+    <span id="orderItemCountBadge">0</span>
+</button>
+
+<div id="orderSummaryModal">
+    <div class="order-summary-content">
+        <div class="order-summary-header">
+            <h2>Your Order Request</h2>
+            <button id="closeOrderModalBtn" aria-label="Close order summary">&times;</button>
+        </div>
+        <div id="orderSummaryList">
+            <p class="empty-order-message">Your order request is currently empty.</p>
+        </div>
+        <div class="order-summary-form">
+            <label for="businessNameInput">Your Business Name (Required):</label>
+            <input type="text" id="businessNameInput" placeholder="Enter your business name">
+            
+            <label for="buyerEmailInput">Your Email (to receive a copy):</label>
+            <input type="email" id="buyerEmailInput" placeholder="your.email@example.com">
+            
+            <label for="orderNotesInput">Optional Notes:</label>
+            <textarea id="orderNotesInput" placeholder="Any special requests or notes for this order..."></textarea>
+        </div>
+        <div class="order-summary-buttons">
+             <button id="clearOrderBtn">Clear Order</button>
+            <button id="submitOrderRequestBtn">Submit Request via Email</button>
+        </div>
+    </div>
+</div>
+
+
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-col brand">
+            <h4>Sacred Earth Produce</h4>
+            <p>orders@sacredearthproduce.com</p>
+            <small class="desktop-only">© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/about.html">about</a></li>
+                <li><a href="/how-it-works.html">how it works</a></li>
+                <li><a href="/buyers.html">buyers</a></li>
+                <li><a href="/farmers.html">farmers</a></li>
+                <li><a href="/contact.html">contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Join Our List</h4>
+            <p>Get weekly availability updates and news from our growers.</p>
+            <form>
+                <input type="email" placeholder="Email Address" required>
+                <button type="submit">sign up</button>
+            </form>
+            <small>We respect your privacy.</small>
+        </div>
+    </div>
+    <div class="footer-bottom mobile-only">
+        <small>© 2025 Sacred Earth Produce • Los Angeles, CA</small>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+
+    /* --- Mobile Nav --- */
+    document.addEventListener('click', e => {
+        const mBtn = document.querySelector('.mobile-nav-toggle');
+        const menu = document.querySelector('nav ul');
+        if (mBtn && menu) {
+            if (e.target === mBtn) {
+                e.stopPropagation();
+                const open = menu.classList.toggle('mobile-active');
+                mBtn.textContent = open ? '×' : '☰';
+                document.body.classList.toggle('modal-open', open); 
+            } else if (menu.classList.contains('mobile-active') && !menu.contains(e.target) && e.target !== mBtn) {
+                menu.classList.remove('mobile-active');
+                mBtn.textContent = '☰';
+                document.body.classList.remove('modal-open');
+            }
+        }
+    });
+
+    /* --- Sticky Bar & Scroll Effects --- */
+    const stickyBar=document.getElementById('sticky-bar');
+    const header=document.querySelector('header');
+    if (stickyBar && header) {
+        const setBarTop=()=>{stickyBar.style.top=`${header.offsetHeight}px`};
+        setBarTop(); window.addEventListener('resize',setBarTop,{passive:true});
+        window.addEventListener('scroll',()=>{document.body.classList.toggle('scrolled',window.scrollY>(stickyBar.offsetTop-header.offsetHeight))},{passive:true});
+    }
+
+    /* --- Reveal on Scroll --- */
+    const revealElements = document.querySelectorAll('.animate-on-scroll');
+    if (typeof IntersectionObserver === 'function') {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    if (!el.classList.contains('table-wrap') && !el.closest('.table-wrap')) {
+                        const delay = el.dataset.animationDelay;
+                        if (delay) el.style.transitionDelay = delay;
+                    }
+                    el.classList.add('is-visible');
+                    observer.unobserve(el);
+                }
+            });
+        }, { 
+            threshold: 0.01, 
+            rootMargin: "0px 0px 250px 0px" 
+        });
+        revealElements.forEach(el => observer.observe(el));
+    } else {
+        revealElements.forEach(el => el.classList.add('is-visible'));
+    }
+
+    /* --- Filtering & Sorting Elements --- */
+    const table = document.getElementById('produceTable');
+    const tbody = table ? table.querySelector('tbody') : null;
+    const filterPillsContainer = document.getElementById('filterBar'); 
+    const searchInput = document.getElementById('searchInput');
+    const noRes=document.getElementById('no-results');
+    const filtersWrapper = document.querySelector('.filters-wrapper'); 
+
+    // Order Functionality Elements
+    const orderItemCountBadge = document.getElementById('orderItemCountBadge');
+    const viewOrderBtn = document.getElementById('viewOrderBtn');
+    const orderSummaryModal = document.getElementById('orderSummaryModal');
+    const orderSummaryList = document.getElementById('orderSummaryList');
+    const closeOrderModalBtn = document.getElementById('closeOrderModalBtn');
+    const businessNameInput = document.getElementById('businessNameInput');
+    const buyerEmailInput = document.getElementById('buyerEmailInput');
+    const orderNotesInput = document.getElementById('orderNotesInput');
+    const submitOrderRequestBtn = document.getElementById('submitOrderRequestBtn');
+    const clearOrderBtn = document.getElementById('clearOrderBtn');
+
+    if (!table || !tbody || !filterPillsContainer || !searchInput || !noRes || !filtersWrapper || !orderSummaryModal || !viewOrderBtn || !closeOrderModalBtn || !orderSummaryList || !submitOrderRequestBtn || !clearOrderBtn || !businessNameInput || !buyerEmailInput || !orderNotesInput ) {
+        console.warn("Some page elements for filtering/sorting or order functionality might be missing.");
+    }
+
+    const rows = tbody ? [...tbody.querySelectorAll('tr')] : [];
+    
+    const makeSlug=s=>String(s || '').toLowerCase().replace(/ & /g,'-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-');
+    
+    rows.forEach(row => {
+        const itemName = row.children[1]?.textContent.trim() || 'unknown_item';
+        const itemPack = row.children[2]?.textContent.trim() || 'unknown_pack';
+        const priceText = row.children[3]?.textContent.trim().replace('$', '') || '0';
+        
+        row.dataset.itemName = row.dataset.itemName || itemName;
+        row.dataset.pack = row.dataset.pack || itemPack;
+        row.dataset.price = row.dataset.price || (parseFloat(priceText) || 0).toFixed(2);
+        if (!row.dataset.itemId) { 
+            row.dataset.itemId = `${makeSlug(itemName)}-${makeSlug(itemPack)}`;
+        }
+    });
+    
+    const actualCategoriesInTable = rows.length > 0 ? [...new Set(rows.map(r=>r.dataset.cat))].sort() : [];
+    const icons = { 'All':'#icon-all' };
+
+    if(filterPillsContainer) {
+        ['All', ...actualCategoriesInTable].forEach(c=>{
+            const b=document.createElement('button');
+            const slug = makeSlug(c); 
+            const iconId = icons[c]; 
+            b.className='btn-filter'; 
+            b.dataset.cat= (c === 'All') ? 'all' : slug; 
+
+            if (iconId) {
+                b.innerHTML=`<svg><use href="${iconId}"></use></svg> <span>${c}</span>`;
+                b.classList.add('has-icon');
+            } else {
+                b.innerHTML=`<span>${c}</span>`;
+            }
+            if(c==='All') b.classList.add('active');
+            filterPillsContainer.appendChild(b);
+        });
+    }
+
+
+    function updateScrollFades() {
+        if (!filtersWrapper || !filterPillsContainer) return;
+        const scrollLeft = filterPillsContainer.scrollLeft;
+        const scrollWidth = filterPillsContainer.scrollWidth;
+        const clientWidth = filterPillsContainer.clientWidth;
+
+        filtersWrapper.classList.toggle('show-left-fade', Math.floor(scrollLeft) > 1);
+        const isAtEnd = Math.ceil(scrollLeft) >= (scrollWidth - clientWidth - 1);
+        filtersWrapper.classList.toggle('show-right-fade', !isAtEnd && scrollWidth > clientWidth + 1); 
+    }
+
+    if (filterPillsContainer && filtersWrapper) {
+        filterPillsContainer.addEventListener('scroll', () => {
+            requestAnimationFrame(updateScrollFades);
+        }, { passive: true });
+        
+        setTimeout(updateScrollFades, 150); 
+        window.addEventListener('resize', updateScrollFades);
+    }
+
+    const applyFilters = () => {
+        if (!rows.length || !filterPillsContainer || !searchInput || !noRes) return;
+        const activeBtn = filterPillsContainer.querySelector('.btn-filter.active');
+        if (!activeBtn) return;
+
+        let selectedCatSlug = activeBtn.dataset.cat; 
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        let totalVisible = 0;
+
+        requestAnimationFrame(() => {
+            rows.forEach(r => {
+                const itemCell = r.children[1];
+                const rowCategorySlug = makeSlug(r.dataset.cat); 
+                const itemText = itemCell ? itemCell.textContent.toLowerCase() : '';
+                
+                let showByCat = (selectedCatSlug === 'all') || (rowCategorySlug === selectedCatSlug);
+                const showBySearch = (searchTerm === '') ? true : itemText.includes(searchTerm);
+                const show = showByCat && showBySearch;
+
+                r.classList.toggle('hidden', !show);
+                if (show) {
+                    r.style.display = ''; 
+                } else {
+                    r.style.display = 'none';
+                }
+                if (show) totalVisible++;
+            });
+            noRes.classList.toggle('show', totalVisible === 0);
+            if (filtersWrapper) updateScrollFades(); 
+        });
+    };
+
+    if(searchInput){
+        searchInput.addEventListener('input', () => {
+        clearTimeout(searchInput.timer);
+        searchInput.timer = setTimeout(() => {
+                const allButton = filterPillsContainer.querySelector('.btn-filter[data-cat="all"]');
+                const currentActiveBtn = filterPillsContainer.querySelector('.btn-filter.active');
+
+                if (searchInput.value.trim() !== '' && allButton && currentActiveBtn !== allButton) {
+                    if (currentActiveBtn) {
+                        currentActiveBtn.classList.remove('active');
+                    }
+                    allButton.classList.add('active');
+                    if(table) resetSortIndicators();
+                }
+                applyFilters();
+        }, 200);
+        });
+    }
+
+    if(filterPillsContainer){
+        filterPillsContainer.addEventListener('click', e => {
+            const btn = e.target.closest('.btn-filter');
+            if (!btn) return;
+            const currentActive = filterPillsContainer.querySelector('.btn-filter.active');
+            if (currentActive) currentActive.classList.remove('active');
+            btn.classList.add('active');
+            applyFilters();
+            if(table) resetSortIndicators();
+        });
+    }
+
+
+    const headers = table ? table.querySelectorAll('thead th[data-col]') : [];
+    let sortDir = {};
+
+    const resetSortIndicators = (exceptTh = null) => {
+        headers.forEach(th => {
+            if (th !== exceptTh) {
+                th.classList.remove('sorted', 'asc', 'desc');
+                const indicator = th.querySelector('.sort-indicator');
+                if (indicator) indicator.textContent = '';
+                delete sortDir[th.dataset.col];
+            }
+        });
+    };
+
+    const sortBy = (th, colIndex) => {
+        if(!tbody) return;
+        const colKey = th.dataset.col;
+        let currentDir = sortDir[colKey];
+        resetSortIndicators(th);
+
+        sortDir[colKey] = (currentDir === 'asc') ? 'desc' : 'asc';
+        const dir = sortDir[colKey] === 'asc' ? 1 : -1;
+
+        th.classList.add('sorted', sortDir[colKey]);
+        const indicator = th.querySelector('.sort-indicator');
+        if (indicator) indicator.textContent = dir === 1 ? ' ▲' : ' ▼';
+
+        const currentlyVisibleRows = rows.filter(r => !r.classList.contains('hidden'));
+        const sortedVisibleRows = [...currentlyVisibleRows].sort((a, b) => {
+            const AVal = a.children[colIndex] ? a.children[colIndex].textContent.trim().toLowerCase() : '';
+            const BVal = b.children[colIndex] ? b.children[colIndex].textContent.trim().toLowerCase() : '';
+            if (AVal < BVal) return -dir;
+            if (AVal > BVal) return dir;
+            return 0;
+        });
+        
+        const fragment = document.createDocumentFragment();
+        sortedVisibleRows.forEach(r => fragment.appendChild(r));
+        
+        rows.forEach(r => {
+            if (r.classList.contains('hidden') && !sortedVisibleRows.includes(r)) {
+                fragment.appendChild(r);
+            }
+        });
+
+        tbody.innerHTML = ''; 
+        tbody.appendChild(fragment);
+
+        tbody.querySelectorAll('tr').forEach(r => {
+            if (!r.classList.contains('hidden')) {
+                r.style.display = '';
+            } else {
+                r.style.display = 'none';
+            }
+        });
+    };
+
+    headers.forEach(th => {
+        const colIndex = Array.from(th.parentNode.children).indexOf(th);
+        if (th.style.display !== 'none') { 
+            th.addEventListener('click', () => sortBy(th, colIndex));
+        }
+    });
+    
+    // --- Order Functionality ---
+    let currentOrder = JSON.parse(localStorage.getItem('sacredEarthOrderV1')) || {}; 
+
+    function updateFloatingCartCount() {
+        if (!orderItemCountBadge || !viewOrderBtn) return;
+        let totalQuantity = 0;
+        for (const itemId in currentOrder) {
+            if (currentOrder[itemId] && typeof currentOrder[itemId].quantity === 'number') {
+                totalQuantity += currentOrder[itemId].quantity;
+            }
+        }
+        orderItemCountBadge.textContent = totalQuantity;
+        viewOrderBtn.style.display = totalQuantity > 0 ? 'flex' : 'none';
+    }
+
+    function saveOrder() {
+        localStorage.setItem('sacredEarthOrderV1', JSON.stringify(currentOrder));
+        updateFloatingCartCount();
+        if (orderSummaryModal && orderSummaryModal.classList.contains('visible')) {
+            renderOrderSummary();
+        }
+    }
+
+    function renderQuantityControls(actionCell, itemData) {
+        if (!actionCell || !itemData || !itemData.id) return;
+        const currentQty = currentOrder[itemData.id]?.quantity || 0;
+        actionCell.innerHTML = `
+            <div class="quantity-controls">
+                <button class="quantity-control-btn decrease-qty-btn" data-item-id="${itemData.id}" aria-label="Decrease quantity">-</button>
+                <span class="quantity-display">${currentQty}</span>
+                <button class="quantity-control-btn increase-qty-btn" data-item-id="${itemData.id}" aria-label="Increase quantity">+</button>
+            </div>
+        `;
+    }
+
+    function renderAddButton(actionCell, itemData) { 
+        if (!actionCell || !itemData || !itemData.id) return;
+         actionCell.innerHTML = `<button class="add-to-order-btn" title="Add to Order">+</button>`;
+    }
+    
+    function handleActionClick(e) {
+        const target = e.target;
+        let actionCell = target.closest('.actions-cell');
+        if (!actionCell) return; 
+
+        const row = actionCell.closest('tr');
+        if (!row || !row.dataset.itemId) { 
+            return;
+        }
+
+        const itemId = row.dataset.itemId;
+        const itemData = {
+            id: itemId,
+            name: row.dataset.itemName,
+            pack: row.dataset.pack,
+            price: parseFloat(row.dataset.price)
+        };
+
+        if (target.classList.contains('add-to-order-btn')) {
+            currentOrder[itemId] = { ...itemData, quantity: 1 };
+            renderQuantityControls(actionCell, itemData);
+        } else if (target.classList.contains('increase-qty-btn')) {
+            if (!currentOrder[itemId]) { 
+                currentOrder[itemId] = { ...itemData, quantity: 0 };
+            }
+            currentOrder[itemId].quantity++;
+            const displaySpan = actionCell.querySelector('.quantity-display');
+            if(displaySpan) displaySpan.textContent = currentOrder[itemId].quantity;
+        } else if (target.classList.contains('decrease-qty-btn')) {
+            if (currentOrder[itemId] && currentOrder[itemId].quantity > 0) {
+                currentOrder[itemId].quantity--;
+                if (currentOrder[itemId].quantity === 0) {
+                    delete currentOrder[itemId];
+                    renderAddButton(actionCell, itemData);
+                } else {
+                    const displaySpan = actionCell.querySelector('.quantity-display');
+                    if(displaySpan) displaySpan.textContent = currentOrder[itemId].quantity;
+                }
+            }
+        }
+        saveOrder();
+    }
+
+    if (tbody) { 
+        tbody.addEventListener('click', handleActionClick);
+        rows.forEach(row => {
+            const actionCell = row.querySelector('.actions-cell');
+            if (actionCell) { 
+                const itemId = row.dataset.itemId; 
+                if (!itemId) { 
+                    const itemName = row.dataset.itemName || row.children[1]?.textContent.trim() || 'unknown_item';
+                    const itemPack = row.dataset.pack || row.children[2]?.textContent.trim() || 'unknown_pack';
+                    row.dataset.itemId = `${makeSlug(itemName)}-${makeSlug(itemPack)}`;
+                }
+                const itemData = {
+                    id: row.dataset.itemId,
+                    name: row.dataset.itemName,
+                    pack: row.dataset.pack,
+                    price: parseFloat(row.dataset.price)
+                };
+                if (currentOrder[itemData.id] && currentOrder[itemData.id].quantity > 0) {
+                    renderQuantityControls(actionCell, itemData);
+                } else {
+                    renderAddButton(actionCell, itemData);
+                }
+            }
+        });
+    }
+    updateFloatingCartCount();
+
+    // --- MODAL LOGIC ---
+    function openOrderModal() {
+        if (!orderSummaryModal) return;
+        renderOrderSummary();
+        orderSummaryModal.style.display = 'flex'; 
+        document.body.classList.add('modal-open'); 
+        setTimeout(() => { 
+            orderSummaryModal.classList.add('visible');
+        }, 10); 
+    }
+
+    function closeOrderModal() {
+        if (!orderSummaryModal) return;
+        orderSummaryModal.classList.remove('visible');
+        document.body.classList.remove('modal-open'); 
+        setTimeout(() => { 
+            orderSummaryModal.style.display = 'none'; 
+        }, 300); 
+    }
+
+    if (viewOrderBtn) {
+        viewOrderBtn.addEventListener('click', openOrderModal);
+    }
+
+    if (closeOrderModalBtn) {
+        closeOrderModalBtn.addEventListener('click', closeOrderModal);
+    }
+
+    if (orderSummaryModal) {
+        orderSummaryModal.addEventListener('click', function(event) {
+            if (event.target === orderSummaryModal) { 
+                closeOrderModal();
+            }
+        });
+    }
+    
+    function renderOrderSummary() {
+        if (!orderSummaryList) {
+            console.error("orderSummaryList element not found");
+            return;
+        }
+        orderSummaryList.innerHTML = ''; 
+
+        const items = Object.values(currentOrder);
+        let hasItemsWithQuantity = false;
+
+        items.forEach(item => {
+            if (item.quantity > 0) { 
+                hasItemsWithQuantity = true;
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('order-summary-item');
+                const price = typeof item.price === 'number' ? item.price : 0;
+                itemElement.innerHTML = `
+                    <div class="item-details">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-pack">${item.pack} - $${price.toFixed(2)}/unit</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="quantity-control-btn decrease-qty-btn" data-item-id="${item.id}" aria-label="Decrease quantity">-</button>
+                        <span class="quantity-display">${item.quantity}</span>
+                        <button class="quantity-control-btn increase-qty-btn" data-item-id="${item.id}" aria-label="Increase quantity">+</button>
+                        <button class="remove-item-btn" data-item-id="${item.id}" aria-label="Remove item">&times;</button>
+                    </div>
+                `;
+                orderSummaryList.appendChild(itemElement);
+            }
+        });
+        if (!hasItemsWithQuantity) {
+            orderSummaryList.innerHTML = '<p class="empty-order-message">Your order request is currently empty.</p>';
+        }
+    }
+
+    if (orderSummaryList) {
+        orderSummaryList.addEventListener('click', (e) => {
+            const target = e.target;
+            const itemIdInModal = target.dataset.itemId; 
+
+            if (!itemIdInModal || !currentOrder[itemIdInModal]) return;
+
+            const tableRow = tbody ? tbody.querySelector(`tr[data-item-id="${itemIdInModal}"]`) : null;
+            const actionCell = tableRow ? tableRow.querySelector('.actions-cell') : null;
+            const itemDataForTable = { 
+                id: itemIdInModal,
+                name: currentOrder[itemIdInModal].name,
+                pack: currentOrder[itemIdInModal].pack,
+                price: currentOrder[itemIdInModal].price
+            };
+
+            if (target.classList.contains('increase-qty-btn')) {
+                currentOrder[itemIdInModal].quantity++;
+                if(actionCell) { 
+                   const qtyDisplayInRow = actionCell.querySelector('.quantity-display');
+                   if (qtyDisplayInRow) {qtyDisplayInRow.textContent = currentOrder[itemIdInModal].quantity;}
+                   else { 
+                        renderQuantityControls(actionCell, itemDataForTable);
+                        const newQtyDisplay = actionCell.querySelector('.quantity-display');
+                        if (newQtyDisplay) newQtyDisplay.textContent = currentOrder[itemIdInModal].quantity;
+                   }
+                }
+            } else if (target.classList.contains('decrease-qty-btn')) {
+                currentOrder[itemIdInModal].quantity--;
+                if (currentOrder[itemIdInModal].quantity <= 0) {
+                    delete currentOrder[itemIdInModal];
+                    if(actionCell) renderAddButton(actionCell, itemDataForTable);
+                } else {
+                    if(actionCell) { 
+                        const qtyDisplayInRow = actionCell.querySelector('.quantity-display');
+                        if(qtyDisplayInRow) qtyDisplayInRow.textContent = currentOrder[itemIdInModal].quantity;
+                    }
+                }
+            } else if (target.classList.contains('remove-item-btn')) {
+                delete currentOrder[itemIdInModal];
+                 if(actionCell) renderAddButton(actionCell, itemDataForTable);
+            }
+            saveOrder(); 
+        });
+    }
+    
+    if (clearOrderBtn) {
+        clearOrderBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to clear your current order request?")) {
+                const itemsToReset = { ...currentOrder }; 
+                currentOrder = {};
+                saveOrder(); 
+                
+                Object.keys(itemsToReset).forEach(itemId => {
+                    const rowToReset = tbody ? tbody.querySelector(`tr[data-item-id="${itemId}"]`) : null;
+                    if (rowToReset) {
+                        const actionCell = rowToReset.querySelector('.actions-cell');
+                        if (actionCell) {
+                            const itemData = {
+                                id: itemId,
+                                name: itemsToReset[itemId].name,
+                                pack: itemsToReset[itemId].pack,
+                                price: itemsToReset[itemId].price
+                            };
+                            renderAddButton(actionCell, itemData);
+                        }
+                    }
+                });
+                 if (orderSummaryModal && orderSummaryModal.classList.contains('visible')) { 
+                    renderOrderSummary();
+                }
+            }
+        });
+    }
+    
+    if (submitOrderRequestBtn) {
+        submitOrderRequestBtn.addEventListener('click', () => {
+            const businessName = businessNameInput ? businessNameInput.value.trim() : '';
+            const buyerEmailVal = buyerEmailInput ? buyerEmailInput.value.trim() : '';
+            const orderNotesVal = orderNotesInput ? orderNotesInput.value.trim() : '';
+
+            if (!businessName) {
+                alert("Please enter your Business Name to submit the order request.");
+                if(businessNameInput) businessNameInput.focus();
+                return;
+            }
+            const orderHasItems = Object.values(currentOrder).some(item => item.quantity > 0);
+            if (!orderHasItems) {
+                alert("Your order request is empty. Please add items to your order.");
+                return;
+            }
+
+            const orderData = {
+                businessName: businessName,
+                buyerEmail: buyerEmailVal,
+                notes: orderNotesVal,
+                items: currentOrder,
+                availabilityDate: document.getElementById('date-span')?.textContent || "Current Date"
+            };
+
+            const serverlessFunctionEndpoint = '/api/send-order-email'; 
+
+            submitOrderRequestBtn.textContent = "Sending...";
+            submitOrderRequestBtn.disabled = true;
+            if(clearOrderBtn) clearOrderBtn.disabled = true;
+
+
+            fetch(serverlessFunctionEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(errData.message || `Server error: ${response.status}`);
+                    }).catch(() => {
+                        throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert("Order request sent successfully! A copy has been sent to your email if provided.");
+                    currentOrder = {}; 
+                    saveOrder();      
+                    
+                    rows.forEach(row => {
+                         const actionCell = row.querySelector('.actions-cell');
+                         if (actionCell) {
+                            const itemDataForRow = { 
+                                id: row.dataset.itemId, 
+                                name: row.dataset.itemName, 
+                                pack: row.dataset.pack, 
+                                price: parseFloat(row.dataset.price) 
+                            };
+                            renderAddButton(actionCell, itemDataForRow);
+                         }
+                    });
+
+                    if(orderSummaryModal) closeOrderModal(); 
+                    if(businessNameInput) businessNameInput.value = ''; 
+                    if(buyerEmailInput) buyerEmailInput.value = '';
+                    if(orderNotesInput) orderNotesInput.value = '';
+                } else {
+                    alert("There was an issue sending your order request. Please try again or contact us directly.\nDetails: " + (data.message || "Unknown error from server."));
+                    console.error("Error sending email via function:", data.error || data.message);
+                }
+            })
+            .catch((error) => {
+                alert("There was an error submitting your order request. Please check your connection or contact us directly.\nError: " + error.message);
+                console.error('Fetch Error:', error);
+            })
+            .finally(() => {
+                if(submitOrderRequestBtn) submitOrderRequestBtn.textContent = "Submit Request via Email";
+                if(submitOrderRequestBtn) submitOrderRequestBtn.disabled = false;
+                if(clearOrderBtn) clearOrderBtn.disabled = false;
+            });
+        });
+    }
+    
+    // PDF Download (remains largely the same as previous version)
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    if (downloadPdfBtn) {
+        downloadPdfBtn.addEventListener('click', generateAndDownloadPDF);
+    }
+
+    function generateAndDownloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "letter" });
+
+        const listDate = document.getElementById('date-span')?.textContent || "Current Date";
+        doc.setProperties({
+            title: `Sacred Earth Produce - Availability List (${listDate})`,
+            subject: 'Weekly Wholesale Produce Availability',
+            author: 'Sacred Earth Produce',
+        });
+
+        const pageMargin = 40;
+        const cellPadding = 6; 
+        let startY = 0; 
+
+        const addMainHeader = (docInstance) => {
+            docInstance.setFont("helvetica", "bold");
+            docInstance.setFontSize(18);
+            docInstance.setTextColor(40); 
+            docInstance.text("SACRED EARTH PRODUCE", docInstance.internal.pageSize.getWidth() / 2, pageMargin + 5, { align: "center" });
+            
+            docInstance.setFont("helvetica", "normal");
+            docInstance.setFontSize(11); 
+            docInstance.text(`Availability List: ${listDate}`, docInstance.internal.pageSize.getWidth() / 2, pageMargin + 20, { align: "center" }); 
+
+            docInstance.setFontSize(9);
+            docInstance.setTextColor(80);
+            
+            let contactTop = pageMargin + 40; 
+            const salesContactName = "Jeremiah: (541) 301-5817"; 
+            const salesEmail = "orders@sacredearthproduce.com"; 
+            
+            docInstance.text("Sales:", pageMargin, contactTop);
+            contactTop += 11;
+            docInstance.text(salesContactName, pageMargin, contactTop);
+            contactTop += 11;
+            docInstance.text(`Email: ${salesEmail}`, pageMargin, contactTop);
+
+            let addressTop = pageMargin + 40; 
+            const companyAddressLine1 = "2141 East 51st Street"; 
+            const companyAddressLine2 = "Vernon, CA"; 
+            
+            docInstance.text("Address:", docInstance.internal.pageSize.getWidth() - pageMargin, addressTop, {align: "right"});
+            addressTop += 11;
+            docInstance.text(companyAddressLine1, docInstance.internal.pageSize.getWidth() - pageMargin, addressTop, {align: "right"});
+            addressTop += 11;
+            docInstance.text(companyAddressLine2, docInstance.internal.pageSize.getWidth() - pageMargin, addressTop, {align: "right"});
+            
+            startY = Math.max(contactTop, addressTop) + 25; 
+            docInstance.setLineWidth(0.75); 
+            const brandColorRGBArr = getBrandColorRGBArray(); 
+            docInstance.setDrawColor(brandColorRGBArr[0], brandColorRGBArr[1], brandColorRGBArr[2]);
+            docInstance.line(pageMargin, startY - 10, docInstance.internal.pageSize.getWidth() - pageMargin, startY - 10); 
+            
+            startY += 15; 
+            docInstance.setFont("helvetica", "italic");
+            docInstance.setFontSize(9);
+            docInstance.setTextColor(80); 
+            const organicNote = "All produce listed is Certified Organic by CCOF through Sacred Valley Produce, LLC, unless otherwise noted.";
+            const noteLines = docInstance.splitTextToSize(organicNote, docInstance.internal.pageSize.getWidth() - (pageMargin * 2));
+            docInstance.text(noteLines, docInstance.internal.pageSize.getWidth() / 2, startY, { align: "center" });
+            startY += (noteLines.length * 10) + 20; 
+        };
+
+        const addPageFooter = (docInstance, data) => { 
+            const pageCount = docInstance.internal.getNumberOfPages();
+            docInstance.setFont("helvetica", "normal");
+            docInstance.setFontSize(8);
+            docInstance.setTextColor(150); 
+            
+            const footerText = `© ${new Date().getFullYear()} Sacred Earth Produce · Organic products offered are certified through Sacred Valley Produce, LLC (CCOF) · Updated Weekly`;
+            
+            docInstance.text(footerText, pageMargin, docInstance.internal.pageSize.getHeight() - 20);
+
+            if (pageCount > 1) { 
+                docInstance.text(`Page ${data.pageNumber} of ${pageCount}`, docInstance.internal.pageSize.getWidth() - pageMargin, docInstance.internal.pageSize.getHeight() - 20, { align: "right"});
+            }
+        };
+        
+        const categoriesForPDF = [...actualCategoriesInTable]; 
+        const tableHeaders = ['Item', 'Pack', 'Price', 'Notes'];
+        
+        function getBrandColorRGBArray() {
+            const brandColorHex = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim();
+            let r = 63, g = 97, b = 52; 
+            if (brandColorHex.startsWith('#')) {
+                const hex = brandColorHex.substring(1);
+                if (hex.length === 6) {
+                    r = parseInt(hex.substring(0, 2), 16);
+                    g = parseInt(hex.substring(2, 4), 16);
+                    b = parseInt(hex.substring(4, 6), 16);
+                }
+            }
+            return [r, g, b];
+        }
+        const brandColorRGB = getBrandColorRGBArray();
+        const lightGrayFill = [249, 249, 249]; 
+
+        addMainHeader(doc); 
+
+        let firstTableProcessed = false;
+        categoriesForPDF.forEach((categoryName) => {
+            if (categoryName.toLowerCase() === "all") return;
+
+            const categoryRowsData = rows.filter(row => row.dataset.cat === categoryName)
+                .map(row => [
+                    row.children[1]?.textContent.trim() || '', 
+                    row.children[2]?.textContent.trim() || '', 
+                    row.children[3]?.textContent.trim() || '', 
+                    row.children[4]?.textContent.trim() || ''  
+                ]);
+
+            if (categoryRowsData.length > 0) {
+                let tableStartY = startY;
+                
+                if (!firstTableProcessed) {
+                } else {
+                    tableStartY = doc.autoTable.previous ? doc.autoTable.previous.finalY + 30 : startY + 30;
+                }
+                 
+                const estCategoryHeaderHeight = 15; 
+                const estSpaceBelowHeader = 10 + cellPadding;
+                const estRowHeightPDF = 20; 
+                const estMinSpaceNeeded = estCategoryHeaderHeight + estSpaceBelowHeader + estRowHeightPDF + 50 ;
+
+                if (tableStartY > doc.internal.pageSize.getHeight() - estMinSpaceNeeded ) { 
+                    doc.addPage();
+                    tableStartY = pageMargin; 
+                }
+                
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(13); 
+                doc.setTextColor(brandColorRGB[0], brandColorRGB[1], brandColorRGB[2]);
+                doc.text(categoryName.toUpperCase(), pageMargin, tableStartY);
+                tableStartY += (10 + cellPadding); 
+
+                doc.autoTable({
+                    head: [tableHeaders],
+                    body: categoryRowsData,
+                    startY: tableStartY,
+                    theme: 'striped',
+                    headStyles: { 
+                        fillColor: brandColorRGB, 
+                        textColor: [255,255,255], 
+                        fontStyle: 'bold',
+                        fontSize: 9,
+                        cellPadding: cellPadding,
+                        valign: 'middle'
+                    },
+                    bodyStyles: {
+                        fontSize: 8.5,
+                        textColor: [51, 51, 51], 
+                        cellPadding: cellPadding, 
+                        valign: 'middle',
+                        lineWidth: 0.1,
+                        lineColor: [220,220,220] 
+                    },
+                    alternateRowStyles: { fillColor: lightGrayFill },
+                    columnStyles: {
+                        0: { cellWidth: '40%', fontStyle: 'bold', halign: 'left' }, 
+                        1: { cellWidth: '15%', halign: 'left' }, 
+                        2: { cellWidth: '20%', halign: 'right' }, 
+                        3: { cellWidth: '25%', halign: 'left' }, 
+                    },
+                    didDrawPage: (data) => {
+                        addPageFooter(doc, data);
+                    },
+                    margin: { left: pageMargin, right: pageMargin, bottom: 50 } 
+                });
+                startY = doc.autoTable.previous.finalY + 10; 
+                firstTableProcessed = true;
+            }
+        });
+        
+        const finalPageNum = doc.internal.getNumberOfPages();
+        let pageDataForFinalFooter = { pageNumber: finalPageNum, pageCount: finalPageNum };
+        let lastAutoTableDrawnPage = doc.autoTable.previous ? doc.autoTable.previous.pageNumber : 0; 
+        
+        if (finalPageNum > lastAutoTableDrawnPage || (finalPageNum === 1 && !doc.autoTable.previous) ) {
+             addPageFooter(doc, pageDataForFinalFooter);
+        }
+
+
+        const dateForFile = listDate.replace(/[,\s]+/g, '_').replace(/\//g, '-');
+        doc.save(`SacredEarthProduce_Availability_${dateForFile}.pdf`);
+    }
+    
+    if(rows.length > 0) applyFilters(); 
+
+    window.addEventListener('resize', () => {
+         rows.forEach(r => {
+            if (!r.classList.contains('hidden')) {
+                r.style.display = ''; 
+            } else {
+                r.style.display = 'none';
+            }
+         });
+         if (filtersWrapper) updateScrollFades();
+    }, {passive: true});
+
+});
+</script>
+
+</body>
+</html>
